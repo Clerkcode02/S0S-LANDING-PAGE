@@ -73,7 +73,7 @@ Never animate per frame: `filter: blur()`, `box-shadow`, `clip-path`, `width/hei
 ## Section-specific motion (see docs/animation-spec.md)
 - Hero: phones entrance + scroll parallax + desktop tilt.
 - How It Works: active step highlight driven by IO (which step is centered); desktop may use sticky phone.
-- Tracking: status pills advance Pending → Ongoing → Resolved on reveal, once, labeled "Illustration" — no looping, no "live" wording.
+- Tracking: status pills advance Pending → Ongoing → Cleared on reveal, once, labeled "Illustration" — no looping, no "live" wording.
 - Coordination: SVG connector `stroke-dashoffset` draw-in **once** on reveal (CSS transition — small SVG only).
 - Showcase: per-phone reveal + gentle depth transition; mobile = native horizontal scroll-snap, no 3D.
 

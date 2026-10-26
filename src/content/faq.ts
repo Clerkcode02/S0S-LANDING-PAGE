@@ -39,7 +39,7 @@ export const faq: FaqItem[] = [
     id: "track-status",
     question: "Can I track the status of my report?",
     answer:
-      "Reports move through clear statuses — Pending, Ongoing, and Resolved — with timestamps and updates that support transparency and accountability.",
+      "Reports move through clear statuses — Pending, Ongoing, and Cleared — with timestamps and updates that support transparency and accountability.",
     status: "verified",
   },
   {

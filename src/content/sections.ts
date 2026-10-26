@@ -131,8 +131,8 @@ export const tracking = {
     },
     {
       id: "resolved",
-      label: "Resolved",
-      description: "The incident has been addressed and the report is closed.",
+      label: "Cleared",
+      description: "The incident has been addressed and the report is marked Cleared.",
     },
   ],
 };

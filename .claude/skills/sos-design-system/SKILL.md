@@ -38,7 +38,7 @@ Contrast notes:
 - Red text on light backgrounds must use `--color-accent-strong`.
 - Never convey status by color alone — pair with label or icon.
 
-Status colors (tracking section only): Pending = amber `#C98A1B` + clock icon, Ongoing = accent red + pulse-free dot, Resolved = green `#2F8F5B` + check icon. Always labeled.
+Status colors (tracking section only): Pending = amber `#C98A1B` + clock icon, Ongoing = accent red + pulse-free dot, Cleared = green `#2F8F5B` + check icon. Always labeled.
 
 ## Typography
 - Font: one variable sans via `next/font/google` (preferred: **Inter Tight** for display + **Inter** for body, or **Geist** alone). `display: "swap"`, subset `latin`, max 2 families.

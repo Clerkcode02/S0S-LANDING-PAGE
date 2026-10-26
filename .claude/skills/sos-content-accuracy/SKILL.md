@@ -15,7 +15,7 @@ This page introduces and showcases the app — it is not an install funnel. No "
 - It is a community safety and emergency reporting platform that lets citizens submit incidents to the appropriate local authorities and designated operations center.
 - It connects citizen reports with the personnel responsible for reviewing, assigning, responding to, and monitoring incidents.
 - Brand statement: "Connecting communities to faster, more coordinated emergency response."
-- Workflow: citizen opens app → selects category → captures and submits details → operations center receives → authorized personnel review and assess → appropriate responders assigned → responders receive incident details, location info, notifications → responders use route guidance and available info to proceed → status updates (Pending, Ongoing, Resolved/Cleared) → timestamps and updates support transparency and accountability.
+- Workflow: citizen opens app → selects category → captures and submits details → operations center receives → authorized personnel review and assess → appropriate responders assigned → responders receive incident details, location info, notifications → responders use route guidance and available info to proceed → status updates (Pending, Ongoing, Cleared) → timestamps and updates support transparency and accountability.
 - **Assign and Respond happen in the operations center's web view, not the citizen mobile app.** Only Report, Review, and Resolve are mobile-app screens. Screenshots for Assign/Respond must be web/desktop captures shown in a `BrowserFrame`, never a `PhoneFrame` — see `app-screenshot-showcase` and `src/config/screenshots.ts` (`device: "web"`).
 - Reporting categories (exact list): Rescue; Police; Fire; Other emergency reports; Violence and vulnerable-sector concerns; Incidents involving persons with disabilities and senior citizens; Bullying; Animal concerns; Waste and sanitation issues; Fallen or damaged power lines; Public disturbances; Public intoxication; Video complaints; Traffic incidents; Road obstructions; Flooding; Open or damaged manholes; Typhoon-related incidents.
 
@@ -47,7 +47,7 @@ Draft items render with a `DraftBadge` in non-production or behind `SHOW_DRAFT_B
 - Say "reports are received and reviewed by authorized personnel" / "assigned to appropriate responders" — never "instantly dispatched", "help is on the way", "guaranteed response", "real-time tracking of responders" (unless confirmed).
 - Use "helps", "supports", "designed to" rather than absolute claims.
 - "Every Second Matters." is an approved headline — it states urgency, not a speed promise. Don't extend it into a promise ("…so we respond in seconds").
-- Status wording: Pending, Ongoing, Resolved (may add "/Cleared" where space allows).
+- Status wording: Pending, Ongoing, Cleared — confirmed from the app UI (the terminal state is literally labeled "Cleared", not "Resolved").
 - Illustrative components must say "Illustration" / "Example" and must not look like live data (no realistic names, addresses, or plate numbers; use generic labels like "Report #—", "Flooding", relative times like "Submitted").
 - No fear-mongering, no graphic imagery, no stereotyping in category descriptions.
 
@@ -58,22 +58,26 @@ Approved text:
 Placements: under hero CTAs (short form), FAQ answer, final CTA area (short form), footer (full form).
 
 ## Registration guide (draft)
-Steps live in `src/content/registration.ts`:
+Steps live in `src/content/registration.ts`. Steps 1–4 are confirmed from real app
+screenshots (2026-10-26 intake batch — see `docs/assets-guide.md` intake log):
 ```ts
 export const registration = {
   status: "draft" as "draft" | "verified",
   steps: [
-    { id: "download", title: "Download and open the app", body: "…", slot: "register-welcome" },
-    { id: "select",   title: "Select the registration option", body: "…", slot: "register-form" },
-    { id: "details",  title: "Complete the required details", body: "Enter the information requested by the app.", slot: "register-form" },
-    { id: "verify",   title: "Complete any required verification", body: "…", slot: "register-verify", conditional: true, enabled: true },
-    { id: "signin",   title: "Sign in and explore", body: "…", slot: "register-home" },
+    { id: "signin",  title: "Open the app", body: "…", slot: "register-home" },
+    { id: "terms",   title: "Review and accept the Terms & Conditions", body: "…", slot: "register-welcome" },
+    { id: "details", title: "Complete pre-registration", body: "First/middle/last name + suffix, step 1 of a multi-step form.", slot: "register-form" },
+    { id: "verify",  title: "Reach full verification", body: "Basic Level → Registered → Fully Verified, shown on profile.", slot: "register-verify", conditional: true, enabled: true },
   ],
 };
 ```
-- Do not list specific fields ("name, phone, barangay") until the user supplies them.
+- Still `status: "draft"`: the rest of the multi-step pre-registration form (beyond the
+  name fields) and the exact verification mechanism haven't been shown yet.
+- Do not list specific fields beyond what a real screenshot has confirmed.
 - If the real app has no verification, set `enabled: false` and the step and slot disappear.
-- While `status: "draft"`, the section shows a visible note: "Registration steps are a general guide and will be updated to match the final app."
+- The register-verify screenshot itself is still blocked (see app-screenshot-showcase
+  intake log) — real photo/name/phone — so that slot renders a placeholder until a
+  cleaned version arrives, even though the step's copy is confirmed.
 
 ## FAQ answers
 Write from verified facts. For "Where is the app available?" and anything about stores/coverage, render the configurable draft text. "Is SOS a replacement for emergency hotlines?" → No, plus disclaimer.

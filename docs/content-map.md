@@ -12,8 +12,8 @@ section and what is still draft. Full accuracy rules: that skill — not duplica
 | How It Works | `src/content/sections.ts` | 5-stage workflow: Report → Review → Assign → Respond → Resolve, verified per-stage descriptions | — |
 | Reporting Categories | `src/content/categories.ts` | Exact category list + 5 approved groups from the skill | Descriptions are generic by design; none promise response time |
 | App Showcase | `src/config/screenshots.ts` | N/A (visual only) | All slots `src: null` until screenshots arrive |
-| How to Register | `src/content/registration.ts` | Workflow shape (download → register → verify? → sign in) | **Entire section draft** — exact fields, whether verification exists, are unconfirmed. `status: "draft"`, visible note shown |
-| Incident Tracking | `src/content/sections.ts` | Status vocabulary: Pending, Ongoing, Resolved | Labeled "Illustration" — not live data |
+| How to Register | `src/content/registration.ts` | Steps 1–4 confirmed from real app screenshots: sign-in/create account → accept Terms & Conditions → pre-registration name fields → verification levels (Basic/Registered/Fully Verified) | Still `status: "draft"` — the rest of the multi-step pre-registration form and the exact verification mechanism aren't confirmed yet |
+| Incident Tracking | `src/content/sections.ts` | Status vocabulary: Pending, Ongoing, Cleared (confirmed from app UI) | Labeled "Illustration" — not live data |
 | Responder Coordination | `src/content/sections.ts` | Operations center → review → assignment → on-site flow | — |
 | FAQ | `src/content/faq.ts` | 5 of 7 answers from verified facts + disclaimer | "Where is the app available?" renders `site.availability` draft text; "Do I need an account?" points to the draft register guide |
 | Final CTA | `src/content/sections.ts` | Verbatim headline/support copy, disclaimer (short) | CTA is informational ("Discover SOS" → `#features`), not a download action |

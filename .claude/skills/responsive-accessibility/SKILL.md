@@ -43,7 +43,7 @@ Test widths: 320, 375, 414, 768, 1024, 1280, 1440, 1920. No horizontal page scro
 
 ## Color & text
 - Body text contrast ≥ 4.5:1, large text ≥ 3:1, UI boundaries ≥ 3:1.
-- Status (Pending/Ongoing/Resolved) always has text label + icon, not color only.
+- Status (Pending/Ongoing/Cleared) always has text label + icon, not color only.
 - Text resizes to 200% without loss; no fixed-height text containers.
 - Line length ≤ ~70ch for body.
 

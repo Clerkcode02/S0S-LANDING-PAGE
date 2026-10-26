@@ -44,3 +44,13 @@ next-env.d.ts
 # generated audit/test artifacts
 /reports/
 /.playwright-mcp/
+
+# raw screenshot/brand source material — not deployed, often large, and may contain
+# personal data before intake review (see .claude/skills/app-screenshot-showcase).
+# Only public/screenshots + public/brand (optimized, privacy-checked output) ship.
+/assets/screenshots-raw/*
+/assets/brand-raw/*
+!/assets/screenshots-raw/.gitkeep
+!/assets/screenshots-raw/README.md
+!/assets/brand-raw/.gitkeep
+!/assets/brand-raw/README.md

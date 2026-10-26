@@ -77,17 +77,90 @@ function webPlaceholder(
 }
 
 export const screenshots: Screenshot[] = [
-  mobilePlaceholder("hero-primary", "home", ["hero-primary"], "Home screen of SOS: COMMUNITY APP."),
+  {
+    id: "hero-primary",
+    src: "/screenshots/hero-primary.webp",
+    width: 828,
+    height: 1792,
+    alt: "Home screen listing quick-report categories including Rescue, Police, Fire, and Others, plus shortcuts for audio call, video call, and hotline.",
+    purpose: "home",
+    slots: ["hero-primary"],
+    device: "mobile",
+    privacyChecked: true,
+  },
+  // hero-secondary: on hold — the supplied file is the Updates/announcements feed,
+  // not a category-selection screen. Still a placeholder until the right screenshot
+  // arrives. See docs/assets-guide.md intake log 2026-10-26.
   mobilePlaceholder("hero-secondary", "category", ["hero-secondary"], "Category selection screen for submitting a report."),
+  // how-report: on hold — supplied screenshot shows a real person's face and a
+  // precise street address + GPS coordinates baked into the capture UI. Needs a
+  // cleaned version. See docs/assets-guide.md intake log 2026-10-26.
   mobilePlaceholder("how-report", "report-form", ["how-report", "showcase"], "Report form screen for capturing and submitting incident details."),
-  mobilePlaceholder("how-review", "submitted", ["how-review", "showcase"], "Confirmation screen shown after a report is submitted."),
+  {
+    id: "how-review",
+    src: "/screenshots/how-review.webp",
+    width: 828,
+    height: 1792,
+    alt: "Confirmation screen reading \"Emergency Sent\" after a report is submitted, with a \"View Emergencies\" button.",
+    purpose: "submitted",
+    slots: ["how-review", "showcase"],
+    device: "mobile",
+    privacyChecked: true,
+  },
+  // how-assign: on hold — supplied screenshot shows a real citizen's full name and
+  // phone number in the Report Details panel. Needs a cleaned version.
   webPlaceholder("how-assign", "notifications", ["how-assign"], "Operations center web view showing a report being assigned to responders."),
-  webPlaceholder("how-respond", "map", ["how-respond"], "Operations center web view showing responder route guidance and location information."),
+  {
+    id: "how-respond",
+    src: "/screenshots/how-respond.webp",
+    width: 1080,
+    height: 612,
+    alt: "Operations center web view showing a map with responder units, active reports, and route markers.",
+    purpose: "map",
+    slots: ["how-respond"],
+    device: "web",
+    privacyChecked: true,
+  },
+  // how-resolve: on hold — supplied screenshot includes a specific street address
+  // for the report location. Confirming with the user whether that's OK to show
+  // before registering. See docs/assets-guide.md intake log 2026-10-26.
   mobilePlaceholder("how-resolve", "status", ["how-resolve", "tracking", "showcase"], "Status screen showing a report marked as resolved."),
-  mobilePlaceholder("register-welcome", "welcome", ["register-welcome"], "Welcome screen shown on first opening the app."),
-  mobilePlaceholder("register-form", "register", ["register-form"], "Registration screen for entering account details."),
+  {
+    id: "register-welcome",
+    src: "/screenshots/register-welcome.webp",
+    width: 828,
+    height: 1792,
+    alt: "Terms & Conditions screen shown before registration, with an \"Accept\" button.",
+    purpose: "welcome",
+    slots: ["register-welcome"],
+    device: "mobile",
+    privacyChecked: true,
+  },
+  {
+    id: "register-form",
+    src: "/screenshots/register-form.webp",
+    width: 828,
+    height: 1792,
+    alt: "Pre-registration screen asking for first name, middle name, last name, and suffix, step 1 of 3.",
+    purpose: "register",
+    slots: ["register-form"],
+    device: "mobile",
+    privacyChecked: true,
+  },
+  // register-verify: on hold — supplied screenshot shows a real profile photo, full
+  // name, and phone number. Needs a cleaned version.
   mobilePlaceholder("register-verify", "verify", ["register-verify"], "Verification screen shown during account registration."),
-  mobilePlaceholder("register-home", "login", ["register-home"], "Sign-in screen for returning users."),
+  {
+    id: "register-home",
+    src: "/screenshots/register-home.webp",
+    width: 828,
+    height: 1792,
+    alt: "Sign-in screen with a phone number field, \"Sign In\" button, and a \"Use Face ID\" option.",
+    purpose: "login",
+    slots: ["register-home"],
+    device: "mobile",
+    privacyChecked: true,
+  },
 ];
 
 export const bySlot = (slot: Slot): Screenshot[] =>

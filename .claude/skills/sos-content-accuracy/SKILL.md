@@ -16,6 +16,7 @@ This page introduces and showcases the app — it is not an install funnel. No "
 - It connects citizen reports with the personnel responsible for reviewing, assigning, responding to, and monitoring incidents.
 - Brand statement: "Connecting communities to faster, more coordinated emergency response."
 - Workflow: citizen opens app → selects category → captures and submits details → operations center receives → authorized personnel review and assess → appropriate responders assigned → responders receive incident details, location info, notifications → responders use route guidance and available info to proceed → status updates (Pending, Ongoing, Resolved/Cleared) → timestamps and updates support transparency and accountability.
+- **Assign and Respond happen in the operations center's web view, not the citizen mobile app.** Only Report, Review, and Resolve are mobile-app screens. Screenshots for Assign/Respond must be web/desktop captures shown in a `BrowserFrame`, never a `PhoneFrame` — see `app-screenshot-showcase` and `src/config/screenshots.ts` (`device: "web"`).
 - Reporting categories (exact list): Rescue; Police; Fire; Other emergency reports; Violence and vulnerable-sector concerns; Incidents involving persons with disabilities and senior citizens; Bullying; Animal concerns; Waste and sanitation issues; Fallen or damaged power lines; Public disturbances; Public intoxication; Video complaints; Traffic incidents; Road obstructions; Flooding; Open or damaged manholes; Typhoon-related incidents.
 
 ## Category grouping (approved)

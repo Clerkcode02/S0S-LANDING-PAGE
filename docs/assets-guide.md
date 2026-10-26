@@ -17,6 +17,12 @@ assets/brand-raw/         ← logo.svg (or PNG), app-icon.png (1024×1024), og-i
 `SCREENSHOTS-GUIDE.md`. Arbitrary names are fine too; they get renamed/mapped by purpose
 during intake.
 
+**Mobile app vs. operations center web view.** Report, Review, and Resolve are citizen
+mobile-app screens (portrait). Assign and Respond happen in the operations center's
+**web view**, not the mobile app — those two need landscape browser screenshots, not
+phone screenshots. See `sos-content-accuracy` "Verified product facts" and the full id
+table in `app-screenshot-showcase`.
+
 ## Process (run every time new files are dropped)
 
 1. Inspect each image, identify its purpose (welcome, register, verify, login, home,
@@ -26,7 +32,7 @@ during intake.
    max width 1080px, metadata stripped, and prints a manifest stub with real
    width/height to paste into `src/config/screenshots.ts`.
 4. Register each image in `src/config/screenshots.ts` with accurate `alt` text,
-   `purpose`, `slots`, and `privacyChecked: true`.
+   `purpose`, `slots`, `device` (`"mobile"` or `"web"`), and `privacyChecked: true`.
 5. Place per the mapping table in the skill; confirm ambiguous placements with the user.
 6. Verify at 320/768/1440 — no CLS, only `hero-primary` uses `priority`.
 7. Log the batch below.

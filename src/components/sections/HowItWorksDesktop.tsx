@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { HowItWorksStage } from "@/content/sections";
 import { byId } from "@/config/screenshots";
-import { PhoneFrame } from "@/components/device/PhoneFrame";
+import { DeviceFrame } from "@/components/device/DeviceFrame";
 import { loadGsap } from "@/lib/motion/gsap";
 import { prefersReducedMotion } from "@/lib/motion/preferences";
 
@@ -94,9 +94,10 @@ export function HowItWorksDesktop({ stages }: { stages: HowItWorksStage[] }) {
     <div className="grid grid-cols-12 gap-12">
       <div className="col-span-5">
         <div className="sticky top-[calc(var(--nav-h)+3rem)]">
-          <PhoneFrame screenshot={screenshot} slot={activeStage.slot} />
+          <DeviceFrame screenshot={screenshot} slot={activeStage.slot} />
           <p className="mt-6 text-sm text-muted-dark">
             Step {activeStage.step} of {stages.length}
+            {screenshot.device === "web" && " — operations center web view"}
           </p>
         </div>
       </div>

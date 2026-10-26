@@ -35,6 +35,12 @@ export type Slot =
   | "register-home"
   | "tracking";
 
+// Assign and Respond happen in the operations center's web view, not the citizen
+// mobile app — confirmed by the user. Those two slots render in a BrowserFrame
+// (landscape) instead of a PhoneFrame (portrait); everything else is the mobile app.
+// See .claude/skills/sos-content-accuracy/SKILL.md "Verified product facts".
+export type Device = "mobile" | "web";
+
 export interface Screenshot {
   id: string; // e.g. "03-report-form"
   src: string | null; // "/screenshots/03-report-form.webp"; null = placeholder
@@ -43,44 +49,45 @@ export interface Screenshot {
   alt: string; // factual description, never a marketing claim
   purpose: ScreenPurpose;
   slots: Slot[];
+  device: Device;
   caption?: string;
   privacyChecked: boolean; // must be true before `src` is non-null in production
 }
 
-// Default placeholder ratio (~9:19.5) used until real screenshot dimensions are known.
-const PLACEHOLDER_WIDTH = 1179;
-const PLACEHOLDER_HEIGHT = 2556;
+// Default placeholder ratios until real screenshot dimensions are known.
+const MOBILE_PLACEHOLDER = { width: 1179, height: 2556 }; // ~9:19.5
+const WEB_PLACEHOLDER = { width: 1600, height: 1000 }; // ~16:10
 
-function placeholder(
+function mobilePlaceholder(
   id: string,
   purpose: ScreenPurpose,
   slots: Slot[],
   alt: string,
 ): Screenshot {
-  return {
-    id,
-    src: null,
-    width: PLACEHOLDER_WIDTH,
-    height: PLACEHOLDER_HEIGHT,
-    alt,
-    purpose,
-    slots,
-    privacyChecked: false,
-  };
+  return { id, src: null, ...MOBILE_PLACEHOLDER, alt, purpose, slots, device: "mobile", privacyChecked: false };
+}
+
+function webPlaceholder(
+  id: string,
+  purpose: ScreenPurpose,
+  slots: Slot[],
+  alt: string,
+): Screenshot {
+  return { id, src: null, ...WEB_PLACEHOLDER, alt, purpose, slots, device: "web", privacyChecked: false };
 }
 
 export const screenshots: Screenshot[] = [
-  placeholder("hero-primary", "home", ["hero-primary"], "Home screen of SOS: COMMUNITY APP."),
-  placeholder("hero-secondary", "category", ["hero-secondary"], "Category selection screen for submitting a report."),
-  placeholder("how-report", "report-form", ["how-report", "showcase"], "Report form screen for capturing and submitting incident details."),
-  placeholder("how-review", "submitted", ["how-review", "showcase"], "Confirmation screen shown after a report is submitted."),
-  placeholder("how-assign", "notifications", ["how-assign", "showcase"], "Notification screen shown when a report is assigned."),
-  placeholder("how-respond", "map", ["how-respond", "showcase"], "Map or route guidance screen used by responders."),
-  placeholder("how-resolve", "status", ["how-resolve", "tracking", "showcase"], "Status screen showing a report marked as resolved."),
-  placeholder("register-welcome", "welcome", ["register-welcome"], "Welcome screen shown on first opening the app."),
-  placeholder("register-form", "register", ["register-form"], "Registration screen for entering account details."),
-  placeholder("register-verify", "verify", ["register-verify"], "Verification screen shown during account registration."),
-  placeholder("register-home", "login", ["register-home"], "Sign-in screen for returning users."),
+  mobilePlaceholder("hero-primary", "home", ["hero-primary"], "Home screen of SOS: COMMUNITY APP."),
+  mobilePlaceholder("hero-secondary", "category", ["hero-secondary"], "Category selection screen for submitting a report."),
+  mobilePlaceholder("how-report", "report-form", ["how-report", "showcase"], "Report form screen for capturing and submitting incident details."),
+  mobilePlaceholder("how-review", "submitted", ["how-review", "showcase"], "Confirmation screen shown after a report is submitted."),
+  webPlaceholder("how-assign", "notifications", ["how-assign"], "Operations center web view showing a report being assigned to responders."),
+  webPlaceholder("how-respond", "map", ["how-respond"], "Operations center web view showing responder route guidance and location information."),
+  mobilePlaceholder("how-resolve", "status", ["how-resolve", "tracking", "showcase"], "Status screen showing a report marked as resolved."),
+  mobilePlaceholder("register-welcome", "welcome", ["register-welcome"], "Welcome screen shown on first opening the app."),
+  mobilePlaceholder("register-form", "register", ["register-form"], "Registration screen for entering account details."),
+  mobilePlaceholder("register-verify", "verify", ["register-verify"], "Verification screen shown during account registration."),
+  mobilePlaceholder("register-home", "login", ["register-home"], "Sign-in screen for returning users."),
 ];
 
 export const bySlot = (slot: Slot): Screenshot[] =>

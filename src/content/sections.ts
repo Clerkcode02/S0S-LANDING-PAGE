@@ -83,7 +83,7 @@ export const howItWorks = {
       step: 3,
       title: "Assign",
       description:
-        "The report is assigned to the appropriate responders based on the operations center's assessment.",
+        "Through the operations center's web view, the report is assigned to the appropriate responders based on personnel's assessment.",
       slot: "how-assign",
     },
     {
@@ -91,7 +91,7 @@ export const howItWorks = {
       step: 4,
       title: "Respond",
       description:
-        "Responders receive the incident details, location information, and notifications, and use available route guidance to proceed.",
+        "The operations center's web view provides responders with incident details, location information, and route guidance to proceed.",
       slot: "how-respond",
     },
     {

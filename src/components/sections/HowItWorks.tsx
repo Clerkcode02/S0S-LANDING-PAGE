@@ -3,7 +3,7 @@ import { byId } from "@/config/screenshots";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/motion/Reveal";
-import { PhoneFrame } from "@/components/device/PhoneFrame";
+import { DeviceFrame } from "@/components/device/DeviceFrame";
 import { HowItWorksDesktop } from "./HowItWorksDesktop";
 
 /**
@@ -38,8 +38,11 @@ export function HowItWorks() {
                   <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-dark">
                     {stage.description}
                   </p>
-                  <div className="mt-6 max-w-[220px]">
-                    <PhoneFrame screenshot={screenshot} slot={stage.slot} />
+                  <div className={screenshot.device === "web" ? "mt-6 max-w-[340px]" : "mt-6 max-w-[220px]"}>
+                    <DeviceFrame screenshot={screenshot} slot={stage.slot} />
+                    {screenshot.device === "web" && (
+                      <p className="mt-2 text-xs text-muted-dark">Operations center web view</p>
+                    )}
                   </div>
                 </Reveal>
               </li>

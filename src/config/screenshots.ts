@@ -58,7 +58,9 @@ export interface Screenshot {
 const MOBILE_PLACEHOLDER = { width: 1179, height: 2556 }; // ~9:19.5
 const WEB_PLACEHOLDER = { width: 1600, height: 1000 }; // ~16:10
 
-function mobilePlaceholder(
+// Exported so the next intake batch can reach for either helper directly — e.g. to
+// revert a slot back to a placeholder, or register a new web-device screen.
+export function mobilePlaceholder(
   id: string,
   purpose: ScreenPurpose,
   slots: Slot[],
@@ -67,7 +69,7 @@ function mobilePlaceholder(
   return { id, src: null, ...MOBILE_PLACEHOLDER, alt, purpose, slots, device: "mobile", privacyChecked: false };
 }
 
-function webPlaceholder(
+export function webPlaceholder(
   id: string,
   purpose: ScreenPurpose,
   slots: Slot[],
@@ -92,10 +94,19 @@ export const screenshots: Screenshot[] = [
   // not a category-selection screen. Still a placeholder until the right screenshot
   // arrives. See docs/assets-guide.md intake log 2026-10-26.
   mobilePlaceholder("hero-secondary", "category", ["hero-secondary"], "Category selection screen for submitting a report."),
-  // how-report: on hold — supplied screenshot shows a real person's face and a
-  // precise street address + GPS coordinates baked into the capture UI. Needs a
-  // cleaned version. See docs/assets-guide.md intake log 2026-10-26.
-  mobilePlaceholder("how-report", "report-form", ["how-report", "showcase"], "Report form screen for capturing and submitting incident details."),
+  {
+    id: "how-report",
+    src: "/screenshots/how-report.webp",
+    width: 828,
+    height: 1792,
+    // Original had a visible face and a precise street address/GPS/timestamp overlay —
+    // blurred at the user's explicit request (2026-10-26). See docs/assets-guide.md.
+    alt: "Report capture screen with a camera viewfinder; the photographed subject and the location/timestamp overlay are blurred for privacy.",
+    purpose: "capture",
+    slots: ["how-report", "showcase"],
+    device: "mobile",
+    privacyChecked: true,
+  },
   {
     id: "how-review",
     src: "/screenshots/how-review.webp",
@@ -107,9 +118,19 @@ export const screenshots: Screenshot[] = [
     device: "mobile",
     privacyChecked: true,
   },
-  // how-assign: on hold — supplied screenshot shows a real citizen's full name and
-  // phone number in the Report Details panel. Needs a cleaned version.
-  webPlaceholder("how-assign", "notifications", ["how-assign"], "Operations center web view showing a report being assigned to responders."),
+  {
+    id: "how-assign",
+    src: "/screenshots/how-assign.webp",
+    width: 1080,
+    height: 612,
+    // Original showed the reporter's real full name and phone number — blurred at the
+    // user's explicit request (2026-10-26). See docs/assets-guide.md.
+    alt: "Operations center web view showing a report's assignment details and a map with responder units; the reporter's name and phone number are blurred for privacy.",
+    purpose: "notifications",
+    slots: ["how-assign"],
+    device: "web",
+    privacyChecked: true,
+  },
   {
     id: "how-respond",
     src: "/screenshots/how-respond.webp",
@@ -121,10 +142,19 @@ export const screenshots: Screenshot[] = [
     device: "web",
     privacyChecked: true,
   },
-  // how-resolve: on hold — supplied screenshot includes a specific street address
-  // for the report location. Confirming with the user whether that's OK to show
-  // before registering. See docs/assets-guide.md intake log 2026-10-26.
-  mobilePlaceholder("how-resolve", "status", ["how-resolve", "tracking", "showcase"], "Status screen showing a report marked as resolved."),
+  {
+    id: "how-resolve",
+    src: "/screenshots/how-resolve.webp",
+    width: 828,
+    height: 1792,
+    // Original showed a specific street address — blurred at the user's explicit
+    // request (2026-10-26). See docs/assets-guide.md.
+    alt: "Status screen showing a report's timeline from Pending to Cleared, with the location detail blurred for privacy.",
+    purpose: "status",
+    slots: ["how-resolve", "tracking", "showcase"],
+    device: "mobile",
+    privacyChecked: true,
+  },
   {
     id: "register-welcome",
     src: "/screenshots/register-welcome.webp",
@@ -147,9 +177,19 @@ export const screenshots: Screenshot[] = [
     device: "mobile",
     privacyChecked: true,
   },
-  // register-verify: on hold — supplied screenshot shows a real profile photo, full
-  // name, and phone number. Needs a cleaned version.
-  mobilePlaceholder("register-verify", "verify", ["register-verify"], "Verification screen shown during account registration."),
+  {
+    id: "register-verify",
+    src: "/screenshots/register-verify.webp",
+    width: 828,
+    height: 1792,
+    // Original showed a real profile photo, full name, and phone number — blurred at
+    // the user's explicit request (2026-10-26). See docs/assets-guide.md.
+    alt: "Profile screen showing verification level badges — Basic Level, Registered, Fully Verified; the account photo, name, and phone number are blurred for privacy.",
+    purpose: "verify",
+    slots: ["register-verify"],
+    device: "mobile",
+    privacyChecked: true,
+  },
   {
     id: "register-home",
     src: "/screenshots/register-home.webp",

@@ -7,6 +7,9 @@ description: Product facts, approved copy, draft-content handling, and claims ru
 
 This is an emergency-reporting product. Wrong copy can cause real harm. When unsure, say less and mark it draft.
 
+## No download/install CTAs
+This page introduces and showcases the app — it is not an install funnel. No "Download App" / "Get the App" / App Store / Google Play buttons, links, sections, or nav items, anywhere on the page. CTAs are informational and route to in-page sections: "Explore the Features", "Learn How It Works", "Discover SOS", etc. There is no `StoreButton` component and no `site.storeLinks` — don't reintroduce them without the user explicitly asking for an install/acquisition flow again. See CLAUDE.md "Scope: showcase, not install funnel".
+
 ## Verified product facts (only these may be stated as fact)
 - Name: **SOS: COMMUNITY APP** (short form "SOS" after first mention).
 - It is a community safety and emergency reporting platform that lets citizens submit incidents to the appropriate local authorities and designated operations center.
@@ -25,13 +28,12 @@ This is an emergency-reporting product. Wrong copy can cause real harm. When uns
 Category descriptions must be generic ("Report situations where someone may need rescue assistance") — never promise who responds or how fast.
 
 ## Unknown — must NOT be invented
-Registration fields; whether verification exists and how; app store URLs/platforms; coverage areas/cities/LGUs; response times or SLAs; partner organizations or agencies; security/privacy certifications; data retention; pricing; offline capability; languages; number of users; awards; contact details; hotline numbers.
+Registration fields; whether verification exists and how; coverage areas/cities/LGUs; response times or SLAs; partner organizations or agencies; security/privacy certifications; data retention; pricing; offline capability; languages; number of users; awards; contact details; hotline numbers.
 
 For each unknown, use config-driven draft content:
 ```ts
 // src/content/site.ts
 export const site = {
-  storeLinks: { appStore: null as string | null, googlePlay: null as string | null }, // null → "Coming soon"
   availability: { status: "draft", text: "Availability details will be announced by the program administrators." },
   contact: { email: null as string | null, status: "draft" },
   legal: { privacyUrl: null as string | null, termsUrl: null as string | null },
@@ -85,4 +87,5 @@ Write from verified facts. For "Where is the app available?" and anything about 
 - [ ] No banned phrases (instant, guaranteed, immediately dispatched, 24/7, nationwide, certified, trusted by…)
 - [ ] Disclaimer present in all required placements
 - [ ] No fake links, fake numbers, fake names, fake UI
+- [ ] No download/install CTA — no "Download App", store buttons, or store links
 - [ ] Metadata/OG text also accurate

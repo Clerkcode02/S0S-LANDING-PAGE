@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SOS: COMMUNITY APP — Landing Page
 
-## Getting Started
+Marketing landing page for **SOS: COMMUNITY APP**, a community safety and emergency
+reporting platform. Next.js (App Router) + TypeScript + Tailwind CSS, static-first,
+no backend.
 
-First, run the development server:
+Project rules live in [`CLAUDE.md`](./CLAUDE.md) and `.claude/skills/*/SKILL.md` — read
+those before changing anything. This file is just the run book.
+
+## Install
+
+```bash
+npm install
+```
+
+## Develop
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Typecheck & lint
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run typecheck
+npm run lint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Production build
 
-## Learn More
+```bash
+npm run build
+npm run start   # serves the production build on :3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Screenshots & brand images
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Drop files, then run one command — see [`SCREENSHOTS-GUIDE.md`](./SCREENSHOTS-GUIDE.md)
+and the `app-screenshot-showcase` skill for the full intake workflow.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+assets/screenshots-raw/   ← original app screenshots (PNG/JPG, full-res, dummy data only)
+assets/brand-raw/         ← logo, app icon, OG image
+```
 
-## Deploy on Vercel
+```bash
+npm run optimize:screenshots
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This reads `assets/screenshots-raw/*`, writes optimized WebP + AVIF into
+`public/screenshots/`, and prints a manifest stub to paste into
+`src/config/screenshots.ts`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Performance audit
+
+```bash
+npm run build && npm run start   # in one terminal
+npm run audit:lighthouse         # in another, against the running production build
+```
+
+Procedure and budget: `performance-audit` skill. Results log: `docs/performance-checklist.md`.
+
+## Deploy
+
+### Vercel
+1. Push the repo to GitHub/GitLab/Bitbucket.
+2. Import the repo in Vercel — framework preset "Next.js" is auto-detected.
+3. Set `NEXT_PUBLIC_SITE_URL` to the production URL in Vercel project env vars.
+4. Deploy. No other config needed (no database, no server runtime beyond Next.js itself).
+
+### Generic Node host
+```bash
+npm ci
+npm run build
+NEXT_PUBLIC_SITE_URL=https://your-domain.example npm run start
+```
+Serve behind a reverse proxy (nginx/Caddy) on the port Next listens on (default 3000,
+override with `PORT=xxxx npm run start`).
+
+## Docs
+
+- [`docs/content-map.md`](./docs/content-map.md) — section → source facts, draft status
+- [`docs/assets-guide.md`](./docs/assets-guide.md) — screenshot/brand intake process
+- [`docs/animation-spec.md`](./docs/animation-spec.md) — per-section motion spec
+- [`docs/performance-checklist.md`](./docs/performance-checklist.md) — audit log
+
+## Scope
+
+This is an informational showcase for SOS: COMMUNITY APP — it introduces the app, how
+it works, and its purpose. It is not an install funnel: there are no "Download App" /
+App Store / Google Play buttons anywhere on the page. See `CLAUDE.md` ("Scope: showcase,
+not install funnel") before adding anything that looks like an acquisition CTA.
+
+## What's still a placeholder
+
+Contact email, privacy/terms URLs, availability/coverage, and exact registration fields
+are unconfirmed and render as drafts or honest "unavailable" states. See
+`docs/content-map.md` for the full list and `src/content/site.ts` /
+`src/content/registration.ts` to fill them in once known.

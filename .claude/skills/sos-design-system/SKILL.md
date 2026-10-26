@@ -76,7 +76,7 @@ Glass: `bg-white/5` + `backdrop-blur-md` + 1px `ink-line` border, only on nav an
 ## Components
 - **Button primary:** accent bg, light text, 48px min height, 20–28px horizontal padding, subtle arrow icon that shifts 2px on hover.
 - **Button secondary:** transparent, 1px border (`ink-line` on dark / `paper-line` on light), same sizing.
-- **Disabled store button:** dashed border, muted text, label "Coming soon", `aria-disabled="true"`, not focusable as a link.
+- No store/download button — this page has no install CTAs, see CLAUDE.md "Scope: showcase, not install funnel".
 - **Eyebrow:** red 24px rule + uppercase label.
 - **DraftBadge:** small amber-outlined pill "Draft — pending confirmation"; only in sections with draft content.
 - **Category tile:** icon (24px lucide, stroke 1.5) + title + one-line description; hairline border, no heavy shadow; hover = border color shift + 2px lift.

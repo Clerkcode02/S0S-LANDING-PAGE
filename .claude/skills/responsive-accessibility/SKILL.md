@@ -18,11 +18,11 @@ Test widths: 320, 375, 414, 768, 1024, 1280, 1440, 1920. No horizontal page scro
 - `<a href="#main" class="skip-link">Skip to content</a>` first focusable element.
 - `<header>` (nav), `<main id="main">`, each section a `<section aria-labelledby="…-heading">`, `<footer>`.
 - Exactly one `h1` (hero headline). Each section starts with `h2`; sub-items `h3`. No skipped levels.
-- Section `id`s match nav anchors: `about`, `features` (categories + showcase), `how-it-works`, `register`, `faq`, `download`.
+- Section `id`s match nav anchors: `about`, `features` (categories + showcase), `how-it-works`, `register`, `faq`.
 - Anchor targets offset by sticky nav: `scroll-margin-top: var(--nav-h)`.
 
 ## Navigation
-- Desktop: inline links + Download CTA.
+- Desktop: inline links + an informational CTA (e.g. "Explore the Features") — no download/install CTA, see CLAUDE.md "Scope: showcase, not install funnel".
 - Mobile: a `<button aria-expanded aria-controls="mobile-menu">` toggles a panel. On open: focus first link; `Esc` closes and returns focus to the button; clicking a link closes the menu. Body scroll lock is optional and must be released reliably. Hamburger button has accessible name "Open menu"/"Close menu".
 - Current section indication (optional) via `aria-current="true"`, not color only.
 
@@ -30,14 +30,14 @@ Test widths: 320, 375, 414, 768, 1024, 1280, 1440, 1920. No horizontal page scro
 - Everything interactive reachable by Tab in visual order. No positive `tabindex`.
 - Visible focus ring on all controls: `outline: 2px solid var(--color-accent); outline-offset: 3px;` — ensure ≥ 3:1 against both dark and light backgrounds (use a light ring on red buttons).
 - Horizontal galleries: container `tabindex="0"` with `role="region"` + `aria-label`, arrow keys scroll natively.
-- Disabled store links: rendered as `<span aria-disabled="true">` or `<button disabled>` with explanatory text, never a focusable fake link.
+- Any disabled/unavailable control (e.g. missing contact/legal link): rendered as `<span aria-disabled="true">` or `<button disabled>` with explanatory text, never a focusable fake link.
 
 ## FAQ accordions
 - Prefer native `<details><summary>`; or `button[aria-expanded][aria-controls]` + region. Summary text is the question as plain text inside an `h3` equivalent.
 - Content is in the DOM (searchable, works without JS).
 
 ## Touch & pointer
-- Touch targets ≥ 44×44px (buttons, menu items, FAQ toggles, store buttons).
+- Touch targets ≥ 44×44px (buttons, menu items, FAQ toggles).
 - ≥ 8px spacing between adjacent targets.
 - Hover-only effects never hide information.
 

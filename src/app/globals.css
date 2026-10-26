@@ -1,26 +1,213 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+ * Design tokens — see .claude/skills/sos-design-system/SKILL.md for the full
+ * rationale and contrast notes. Components must use the resulting utilities
+ * (bg-ink, text-paper, text-accent, text-display, …) — never raw hex values.
+ * ------------------------------------------------------------------------- */
+@theme {
+  /* Surfaces */
+  --color-ink: #101318;
+  --color-ink-raised: #1b2027;
+  --color-ink-line: #2a313b;
+  --color-paper: #f5f6f7;
+  --color-paper-line: #e1e4e8;
+
+  /* Accent */
+  --color-accent: #d93642;
+  --color-accent-strong: #b8232f;
+  --color-accent-soft: #f6e8ea;
+
+  /* Text */
+  --color-text-dark: #171a20;
+  --color-text-light: #f7f8fa;
+  --color-muted-dark: #9aa2ad;
+  --color-muted-light: #5e6672;
+
+  /* Status (Incident Tracking section only — always paired with a label/icon) */
+  --color-status-pending: #c98a1b;
+  --color-status-ongoing: #d93642;
+  --color-status-resolved: #2f8f5b;
+
+  /* Fonts */
+  --font-display: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid type scale */
+  --text-display: clamp(3rem, 1.2rem + 7.5vw, 9rem);
+  --text-h2: clamp(2.25rem, 1.2rem + 4.2vw, 5.5rem);
+  --text-h3: clamp(1.375rem, 1rem + 1.4vw, 2.25rem);
+  --text-lead: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-eyebrow: 0.8125rem;
+
+  /* Radii */
+  --radius-control: 6px;
+  --radius-card: 14px;
+  --radius-phone: 2.6rem;
+
+  /* Layout */
+  --breakpoint-3xl: 1920px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --nav-h: 4.5rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (min-width: 1024px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --nav-h: 5rem;
+  }
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-text-dark);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+
+section[id] {
+  scroll-margin-top: var(--nav-h);
+}
+
+/* ---------------------------------------------------------------------------
+ * Accessible focus ring — visible on every interactive element, on both dark
+ * and light surfaces. Buttons on the accent background get a light ring via
+ * .focus-ring-on-accent so it still reads at ≥3:1.
+ * ------------------------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.focus-ring-on-accent:focus-visible {
+  outline-color: var(--color-text-light);
+}
+
+/* Skip link: visually hidden until focused */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 100;
+  background: var(--color-accent);
+  color: var(--color-text-light);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-control);
+  font-size: var(--text-small);
+  font-weight: 600;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+  outline-color: var(--color-text-light);
+}
+
+/* ---------------------------------------------------------------------------
+ * Reveal-on-scroll — see .claude/skills/lightweight-motion/SKILL.md.
+ * Transform + opacity only. Content must be visible without JS and with
+ * reduced motion.
+ * ------------------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.no-js [data-reveal] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Responder Coordination connector — draws in once via the same [data-reveal]
+ * mechanism as everything else (shared IntersectionObserver), no extra JS. Small SVG
+ * only. See .claude/skills/lightweight-motion/SKILL.md ("Coordination"). */
+.connector-path {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  transition: stroke-dashoffset 1.1s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+[data-reveal].is-visible .connector-path,
+.no-js .connector-path {
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connector-path {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
+
+/* 2.5D stage used by the hero and showcase phones. */
+.perspective-stage {
+  perspective: 1600px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Horizontal scroll-snap gallery (mobile showcase, < 1024px). */
+.snap-gallery {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.snap-gallery > * {
+  scroll-snap-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snap-gallery {
+    scroll-behavior: auto;
+  }
 }

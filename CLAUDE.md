@@ -9,6 +9,9 @@ Brand statement: *SOS: COMMUNITY APP — Connecting communities to faster, more 
 
 Goal: the FEEL of an award-winning agency site (editorial, cinematic, 2.5D depth) with the performance of a lean product page. Never a generic SaaS template.
 
+## Scope: showcase, not install funnel
+This page **introduces, showcases, and promotes** SOS: COMMUNITY APP — it does not encourage or facilitate downloads. No "Download App" / "Get the App" / App Store / Google Play buttons, links, sections, or nav items, anywhere. CTAs are informational ("Explore the Features", "Learn How It Works", "Discover SOS") and route to in-page sections. The experience should read as a premium, interactive product showcase — functionality, community impact, and purpose — not a conversion/acquisition flow.
+
 ## Priorities (in order)
 1. Public trust and accurate emergency information
 2. Excellent visual design
@@ -42,7 +45,7 @@ scripts/optimize-screenshots.mjs
 src/app/                    ← layout.tsx, page.tsx, sitemap.ts, robots.ts, globals.css
 src/components/layout/      ← Nav, Footer, SkipLink
 src/components/sections/    ← one file per page section
-src/components/ui/          ← Button, Eyebrow, Container, Disclosure, DraftBadge, StoreButton
+src/components/ui/          ← Button, Eyebrow, Container, Disclosure, DraftBadge
 src/components/device/      ← PhoneFrame, PhoneStack, ScreenshotPlaceholder
 src/components/motion/      ← Reveal, TiltOnHover, MotionProvider (client-only)
 src/content/                ← site.ts, sections.ts, categories.ts, faq.ts, registration.ts
@@ -56,7 +59,7 @@ docs/                       ← content-map, assets-guide, animation-spec, perfo
 - Sections are Server Components by default. Add `"use client"` only to small leaf components that need interaction or motion.
 - One section per file; `page.tsx` only composes sections.
 - All text and structure must render without JavaScript. Motion is progressive enhancement.
-- No dead links: missing destinations (store URLs, privacy, terms, contact) render as disabled/“Coming soon” states driven by config, never `href="#"`.
+- No dead links: missing destinations (privacy, terms, contact) render as honest "unavailable" states driven by config, never `href="#"`.
 
 ## Design language (details: `sos-design-system` skill)
 Dark near-black surfaces, light neutral contrast sections, controlled emergency red, oversized editorial type, large negative space, deliberate asymmetry, restrained glass. Tokens live in `globals.css` (`@theme`) — never hard-code hex values in components.

@@ -1,0 +1,48 @@
+# Assets Guide
+
+Full intake rules, privacy review, manifest schema, and placement mapping live in
+`.claude/skills/app-screenshot-showcase/SKILL.md` — this doc is the practical checklist
+and the running intake log. Read the skill before registering anything.
+
+## Drop locations (not deployed)
+
+```
+assets/screenshots-raw/   ← original app screenshots, full resolution, dummy data only
+assets/brand-raw/         ← logo.svg (or PNG), app-icon.png (1024×1024), og-image.png (1200×630)
+```
+
+## Naming
+
+`<order>-<screen-purpose>.png`, lowercase kebab-case — see the suggested filenames in
+`SCREENSHOTS-GUIDE.md`. Arbitrary names are fine too; they get renamed/mapped by purpose
+during intake.
+
+## Process (run every time new files are dropped)
+
+1. Inspect each image, identify its purpose (welcome, register, verify, login, home,
+   category, report-form, submitted, status, notifications, responder, map, other).
+2. Privacy review — stop and ask the user if any real personal data is visible.
+3. `npm run optimize:screenshots` — generates WebP + AVIF in `public/screenshots/` at
+   max width 1080px, metadata stripped, and prints a manifest stub with real
+   width/height to paste into `src/config/screenshots.ts`.
+4. Register each image in `src/config/screenshots.ts` with accurate `alt` text,
+   `purpose`, `slots`, and `privacyChecked: true`.
+5. Place per the mapping table in the skill; confirm ambiguous placements with the user.
+6. Verify at 320/768/1440 — no CLS, only `hero-primary` uses `priority`.
+7. Log the batch below.
+
+## Slot reference
+
+See `Slot` type in `src/config/screenshots.ts` — one of: `hero-primary`,
+`hero-secondary`, `how-report`, `how-review`, `how-assign`, `how-respond`,
+`how-resolve`, `showcase`, `register-welcome`, `register-form`, `register-verify`,
+`register-home`, `tracking`.
+
+## Intake log
+
+| Date | Files added | Purpose(s) identified | Privacy issues found | Slots filled | Notes |
+|---|---|---|---|---|---|
+| 2026-10-26 | — | — | — | — | Initial build: all slots are placeholders (`src: null`). No screenshots supplied yet. |
+
+Add one row per batch. Never delete prior rows — this is an audit trail of what was
+reviewed and when.

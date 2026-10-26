@@ -1,0 +1,88 @@
+---
+name: sos-content-accuracy
+description: Product facts, approved copy, draft-content handling, and claims rules for SOS COMMUNITY APP. Use whenever writing or editing any user-facing text, FAQ answers, registration steps, CTAs, metadata, alt text, or when the user supplies new product information.
+---
+
+# SOS Content Accuracy
+
+This is an emergency-reporting product. Wrong copy can cause real harm. When unsure, say less and mark it draft.
+
+## Verified product facts (only these may be stated as fact)
+- Name: **SOS: COMMUNITY APP** (short form "SOS" after first mention).
+- It is a community safety and emergency reporting platform that lets citizens submit incidents to the appropriate local authorities and designated operations center.
+- It connects citizen reports with the personnel responsible for reviewing, assigning, responding to, and monitoring incidents.
+- Brand statement: "Connecting communities to faster, more coordinated emergency response."
+- Workflow: citizen opens app → selects category → captures and submits details → operations center receives → authorized personnel review and assess → appropriate responders assigned → responders receive incident details, location info, notifications → responders use route guidance and available info to proceed → status updates (Pending, Ongoing, Resolved/Cleared) → timestamps and updates support transparency and accountability.
+- Reporting categories (exact list): Rescue; Police; Fire; Other emergency reports; Violence and vulnerable-sector concerns; Incidents involving persons with disabilities and senior citizens; Bullying; Animal concerns; Waste and sanitation issues; Fallen or damaged power lines; Public disturbances; Public intoxication; Video complaints; Traffic incidents; Road obstructions; Flooding; Open or damaged manholes; Typhoon-related incidents.
+
+## Category grouping (approved)
+- **Emergency Response:** Rescue, Police, Fire, Other emergency reports
+- **Public Safety:** Public disturbances, Public intoxication, Video complaints
+- **Vulnerable Community Support:** Violence and vulnerable-sector concerns, Incidents involving persons with disabilities and senior citizens, Bullying
+- **Infrastructure & Environment:** Fallen or damaged power lines, Open or damaged manholes, Flooding, Typhoon-related incidents, Waste and sanitation issues
+- **Traffic & Community Concerns:** Traffic incidents, Road obstructions, Animal concerns
+
+Category descriptions must be generic ("Report situations where someone may need rescue assistance") — never promise who responds or how fast.
+
+## Unknown — must NOT be invented
+Registration fields; whether verification exists and how; app store URLs/platforms; coverage areas/cities/LGUs; response times or SLAs; partner organizations or agencies; security/privacy certifications; data retention; pricing; offline capability; languages; number of users; awards; contact details; hotline numbers.
+
+For each unknown, use config-driven draft content:
+```ts
+// src/content/site.ts
+export const site = {
+  storeLinks: { appStore: null as string | null, googlePlay: null as string | null }, // null → "Coming soon"
+  availability: { status: "draft", text: "Availability details will be announced by the program administrators." },
+  contact: { email: null as string | null, status: "draft" },
+  legal: { privacyUrl: null as string | null, termsUrl: null as string | null },
+  emergencyHotlineNote: "For immediate life-threatening emergencies, contact your local emergency hotline.",
+};
+```
+Draft items render with a `DraftBadge` in non-production or behind `SHOW_DRAFT_BADGES` — and the wording itself must be honest even if the badge is hidden.
+
+## Mandatory language rules
+- Say "reports are received and reviewed by authorized personnel" / "assigned to appropriate responders" — never "instantly dispatched", "help is on the way", "guaranteed response", "real-time tracking of responders" (unless confirmed).
+- Use "helps", "supports", "designed to" rather than absolute claims.
+- "Every Second Matters." is an approved headline — it states urgency, not a speed promise. Don't extend it into a promise ("…so we respond in seconds").
+- Status wording: Pending, Ongoing, Resolved (may add "/Cleared" where space allows).
+- Illustrative components must say "Illustration" / "Example" and must not look like live data (no realistic names, addresses, or plate numbers; use generic labels like "Report #—", "Flooding", relative times like "Submitted").
+- No fear-mongering, no graphic imagery, no stereotyping in category descriptions.
+
+## Emergency disclaimer (required)
+Approved text:
+> **For immediate, life-threatening emergencies, call your local emergency hotline.** SOS: COMMUNITY APP supports community reporting and coordination and is not a guaranteed substitute for established emergency services.
+
+Placements: under hero CTAs (short form), FAQ answer, final CTA area (short form), footer (full form).
+
+## Registration guide (draft)
+Steps live in `src/content/registration.ts`:
+```ts
+export const registration = {
+  status: "draft" as "draft" | "verified",
+  steps: [
+    { id: "download", title: "Download and open the app", body: "…", slot: "register-welcome" },
+    { id: "select",   title: "Select the registration option", body: "…", slot: "register-form" },
+    { id: "details",  title: "Complete the required details", body: "Enter the information requested by the app.", slot: "register-form" },
+    { id: "verify",   title: "Complete any required verification", body: "…", slot: "register-verify", conditional: true, enabled: true },
+    { id: "signin",   title: "Sign in and explore", body: "…", slot: "register-home" },
+  ],
+};
+```
+- Do not list specific fields ("name, phone, barangay") until the user supplies them.
+- If the real app has no verification, set `enabled: false` and the step and slot disappear.
+- While `status: "draft"`, the section shows a visible note: "Registration steps are a general guide and will be updated to match the final app."
+
+## FAQ answers
+Write from verified facts. For "Where is the app available?" and anything about stores/coverage, render the configurable draft text. "Is SOS a replacement for emergency hotlines?" → No, plus disclaimer.
+
+## When the user supplies new facts
+1. Add them to this skill's "Verified product facts" (or a new subsection).
+2. Update `src/content/*`, flip relevant `status` to `"verified"`, remove draft badges.
+3. Update `docs/content-map.md`.
+
+## Review checklist
+- [ ] Every factual statement traceable to Verified facts or marked draft
+- [ ] No banned phrases (instant, guaranteed, immediately dispatched, 24/7, nationwide, certified, trusted by…)
+- [ ] Disclaimer present in all required placements
+- [ ] No fake links, fake numbers, fake names, fake UI
+- [ ] Metadata/OG text also accurate

@@ -1,10 +1,11 @@
-import { hero } from "@/content/sections";
+import { hero, howItWorks } from "@/content/sections";
 import { byId } from "@/config/screenshots";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Button } from "@/components/ui/Button";
 import { PhoneStack } from "@/components/device/PhoneStack";
 import { TiltOnHover } from "@/components/motion/TiltOnHover";
+import { HeroWorkflowCycle } from "@/components/motion/HeroWorkflowCycle";
 
 /**
  * Hero — dark, cinematic. Headline is never animated (see
@@ -42,6 +43,10 @@ export function Hero() {
           <p className="mt-4 max-w-xl text-[length:var(--text-body)] leading-relaxed text-muted-dark">
             {hero.description}
           </p>
+
+          <HeroWorkflowCycle
+            stages={howItWorks.stages.map((s) => ({ id: s.id, title: s.title }))}
+          />
 
           <div className="mt-10 flex flex-wrap gap-4">
             <Button href={hero.primaryCta.href} variant="primary">

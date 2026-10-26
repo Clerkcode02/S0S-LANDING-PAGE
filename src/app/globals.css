@@ -189,6 +189,32 @@ section[id] {
   perspective: 1600px;
 }
 
+/* Continuous, very subtle idle rotation on the hero's supporting phone — pure CSS, no
+ * JS, respects prefers-reduced-motion natively. Deliberate exception to the "prefer
+ * one-shot over continuous" rule in lightweight-motion: the user explicitly asked for
+ * a gently-rotating hero piece. Range stays within the 2.5D depth recipe's ±18°
+ * rotateY limit; only rotateY oscillates, rotateX still tracks pointer tilt via --rx.
+ */
+.hero-secondary-phone {
+  transform: translate3d(-18%, 10%, -120px) rotateY(-14deg) rotateX(var(--rx, 8deg));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-secondary-phone {
+    animation: hero-secondary-idle 8s ease-in-out infinite;
+  }
+}
+
+@keyframes hero-secondary-idle {
+  0%,
+  100% {
+    transform: translate3d(-18%, 10%, -120px) rotateY(-14deg) rotateX(var(--rx, 8deg));
+  }
+  50% {
+    transform: translate3d(-18%, 10%, -120px) rotateY(-21deg) rotateX(var(--rx, 8deg));
+  }
+}
+
 .preserve-3d {
   transform-style: preserve-3d;
 }

@@ -27,13 +27,7 @@ export function PhoneStack({
     // composition here would collapse to zero height at lg+, since aspect-ratio is
     // turned off there to let the primary phone's own intrinsic size take over).
     <div className="preserve-3d relative mx-auto aspect-[3/4] w-full max-w-[420px] lg:aspect-auto lg:w-[420px]">
-      <div
-        className="absolute inset-0 hidden lg:flex lg:items-center lg:justify-center"
-        style={{
-          transform:
-            "translate3d(-18%, 10%, -120px) rotateY(-14deg) rotateX(var(--rx, 8deg))",
-        }}
-      >
+      <div className="hero-secondary-phone absolute inset-0 hidden lg:flex lg:items-center lg:justify-center">
         <PhoneFrame
           screenshot={secondary}
           slot={secondarySlot}

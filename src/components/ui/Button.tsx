@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes, AnchorHTMLAttributes, ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 type Variant = "primary" | "secondary";
 
@@ -17,8 +18,10 @@ type ButtonAsButton = BaseProps &
 
 type ButtonProps = ButtonAsLink | ButtonAsButton;
 
+// hover-lift supplies the shared 3px rise + token easing, and is a no-op under
+// prefers-reduced-motion. See .claude/skills/lightweight-motion ("Easing & timing").
 const base =
-  "group inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-control)] px-6 text-[0.95rem] font-semibold transition-colors duration-200";
+  "group hover-lift inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-control)] px-6 text-[0.95rem] font-semibold transition-colors duration-200";
 
 const variants: Record<Variant, string> = {
   primary: "bg-accent text-text-light hover:bg-accent-strong",
@@ -50,7 +53,7 @@ export function Button({
           aria-hidden="true"
           size={18}
           strokeWidth={1.5}
-          className="transition-transform duration-200 group-hover:translate-x-0.5"
+          className="transition-transform duration-200 ease-soft group-hover:translate-x-1"
         />
       )}
     </>
@@ -60,7 +63,11 @@ export function Button({
     const { href, ...anchorRest } = rest as AnchorHTMLAttributes<HTMLAnchorElement> & {
       href: string;
     };
-    return (
+    return href.startsWith("/") ? (
+      <Link href={href} className={classes} {...anchorRest}>
+        {content}
+      </Link>
+    ) : (
       <a href={href} className={classes} {...anchorRest}>
         {content}
       </a>

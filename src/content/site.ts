@@ -7,7 +7,7 @@ export type DraftStatus = "draft" | "verified";
 
 export interface NavItem {
   label: string;
-  href: string; // in-page anchor, matches a section `id`
+  href: string;
 }
 
 export const site = {
@@ -17,17 +17,14 @@ export const site = {
     "SOS: COMMUNITY APP — Connecting communities to faster, more coordinated emergency response.",
 
   nav: [
-    { label: "About", href: "#about" },
-    { label: "Features", href: "#features" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "How to Register", href: "#register" },
-    { label: "FAQs", href: "#faq" },
+    { label: "About", href: "/#about" },
+    { label: "Features", href: "/#features" },
+    { label: "How It Works", href: "/#how-it-works" },
+    { label: "How to Register", href: "/#register" },
+    { label: "FAQs", href: "/#faq" },
   ] satisfies NavItem[],
 
-  // This page introduces and showcases SOS: COMMUNITY APP — it is not an install
-  // funnel. No "Download App" / store CTAs anywhere; the nav CTA is informational.
-  // See CLAUDE.md "Scope" and sos-content-accuracy "No download/install CTAs".
-  exploreCta: { label: "Explore the Features", href: "#features" } satisfies NavItem,
+  bookDemoCta: { label: "Book Demo", href: "/book-demo" } satisfies NavItem,
 
   // Unconfirmed — footer must render these honestly as unavailable, never a dead link.
   contact: {

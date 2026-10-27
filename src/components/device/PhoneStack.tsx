@@ -1,9 +1,10 @@
 import type { Screenshot, Slot } from "@/config/screenshots";
 import { PhoneFrame } from "./PhoneFrame";
+import { PhoneShowcase, type ShowcaseScreen } from "./PhoneShowcase";
 
 interface PhoneStackProps {
-  primary: Screenshot;
-  primarySlot: Slot;
+  /** Screens the dominant front phone cycles through — real screenshots only. */
+  screens: ShowcaseScreen[];
   secondary: Screenshot;
   secondarySlot: Slot;
 }
@@ -13,13 +14,12 @@ interface PhoneStackProps {
  * max — see .claude/skills/lightweight-motion/SKILL.md ("2.5D depth recipe"). Flat and
  * stacked (no rotation) below 1024px; rotation is applied by the TiltOnHover wrapper
  * via the --rx/--ry custom properties on ≥1024px fine-pointer devices only.
+ *
+ * The front phone is a PhoneShowcase (stateful auto-cycling screens), so unlike the
+ * previous version it is mounted exactly once and the desktop rotation comes from the
+ * .hero-phone-tilt media query rather than from a duplicated subtree.
  */
-export function PhoneStack({
-  primary,
-  primarySlot,
-  secondary,
-  secondarySlot,
-}: PhoneStackProps) {
+export function PhoneStack({ screens, secondary, secondarySlot }: PhoneStackProps) {
   return (
     // Secondary phone is absolutely positioned (decorative, offset behind) so it never
     // affects layout sizing. Primary phone stays in normal flow — its rendered height
@@ -36,17 +36,13 @@ export function PhoneStack({
         />
       </div>
       <div className="relative mx-auto w-full max-w-[280px] sm:max-w-[320px] lg:w-[320px]">
-        <div
-          className="hidden lg:block"
-          style={{
-            transform:
-              "rotateY(var(--ry, -8deg)) rotateX(var(--rx, 6deg)) translate3d(0,0,0)",
-          }}
-        >
-          <PhoneFrame screenshot={primary} slot={primarySlot} priority />
-        </div>
-        <div className="lg:hidden">
-          <PhoneFrame screenshot={primary} slot={primarySlot} priority />
+        {/* Three nested elements, three independent transforms: tilt (pointer),
+          * float (idle keyframes), entrance (GSAP, inside PhoneShowcase). Keeping
+          * them separate is what stops them overwriting each other. */}
+        <div className="hero-phone-tilt">
+          <div className="phone-float">
+            <PhoneShowcase screens={screens} />
+          </div>
         </div>
       </div>
     </div>

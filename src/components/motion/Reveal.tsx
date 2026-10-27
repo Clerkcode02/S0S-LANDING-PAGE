@@ -9,6 +9,7 @@ interface RevealProps {
   as?: ElementType;
   delayMs?: number;
   className?: string;
+  "data-label"?: string;
 }
 
 /**
@@ -17,7 +18,7 @@ interface RevealProps {
  * shared IntersectionObserver so CSS handles the actual transition. See
  * .claude/skills/lightweight-motion/SKILL.md.
  */
-export function Reveal({ children, as, delayMs = 0, className }: RevealProps) {
+export function Reveal({ children, as, delayMs = 0, className, "data-label": dataLabel }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ export function Reveal({ children, as, delayMs = 0, className }: RevealProps) {
     ref,
     className,
     "data-reveal": "",
+    "data-label": dataLabel,
   };
 
   return <Tag {...props}>{children}</Tag>;

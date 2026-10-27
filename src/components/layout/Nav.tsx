@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { site } from "@/content/site";
 import { Button } from "@/components/ui/Button";
 
@@ -34,26 +36,41 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-50 h-[var(--nav-h)] border-b border-white/10 bg-ink/80 backdrop-blur-md">
       <div className="mx-auto flex h-full w-full max-w-[1440px] items-center justify-between px-[clamp(1.25rem,4vw,4rem)]">
-        <a href="#top" className="text-sm font-semibold tracking-tight text-text-light">
-          {site.shortName}
-          <span className="text-muted-dark">: COMMUNITY APP</span>
-        </a>
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 text-sm font-semibold tracking-tight text-text-light"
+        >
+          <Image
+            src="/icon"
+            alt=""
+            width={32}
+            height={32}
+            className="size-8 shrink-0 rounded-md"
+          />
+          {/* data-nav-brand is the landing target the intro splash FLIPs its
+              wordmark onto — see src/components/motion/IntroSplash.tsx. Keep it on
+              the element wrapping just the short name. */}
+          <span>
+            <span data-nav-brand>{site.shortName}</span>
+            <span className="text-muted-dark">: COMMUNITY APP</span>
+          </span>
+        </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
           <ul className="flex items-center gap-8">
             {site.nav.map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   href={item.href}
                   className="text-sm font-medium text-text-light/90 transition-colors hover:text-text-light"
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
-          <Button href={site.exploreCta.href} variant="primary" showArrow={false} className="min-h-10 px-5 text-sm">
-            {site.exploreCta.label}
+          <Button href={site.bookDemoCta.href} variant="primary" showArrow={false} className="min-h-10 px-5 text-sm">
+            {site.bookDemoCta.label}
           </Button>
         </nav>
 
@@ -64,7 +81,7 @@ export function Nav() {
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((v) => !v)}
-          className="focus-ring-on-accent flex h-11 w-11 items-center justify-center rounded-[var(--radius-control)] text-text-light lg:hidden"
+            className="focus-ring-on-accent flex h-11 w-11 items-center justify-center rounded-[var(--radius-control)] text-text-light lg:hidden"
         >
           {open ? <X aria-hidden="true" size={24} /> : <Menu aria-hidden="true" size={24} />}
         </button>
@@ -80,25 +97,25 @@ export function Nav() {
         <ul className="flex flex-col gap-1">
           {site.nav.map((item, i) => (
             <li key={item.href}>
-              <a
+              <Link
                 ref={i === 0 ? firstLinkRef : undefined}
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className="block min-h-11 py-2.5 text-base font-medium text-text-light"
               >
                 {item.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
         <Button
-          href={site.exploreCta.href}
+          href={site.bookDemoCta.href}
           variant="primary"
           showArrow={false}
           className="mt-4 w-full"
           onClick={() => setOpen(false)}
         >
-          {site.exploreCta.label}
+          {site.bookDemoCta.label}
         </Button>
       </div>
     </header>

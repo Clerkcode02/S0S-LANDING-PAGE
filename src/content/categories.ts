@@ -73,12 +73,19 @@ export const categoryGroups: CategoryGroup[] = [
     ],
   },
   {
-    id: "infrastructure-environment",
-    title: "Infrastructure & Environment",
-    description: "Hazards and issues affecting shared infrastructure and the environment.",
+    id: "infrastructure-hazards",
+    title: "Infrastructure Hazards",
+    description: "Hazards affecting shared utilities and public infrastructure.",
     items: [
       { id: "power-lines", label: "Fallen or damaged power lines", icon: "Zap", description: "Report a fallen or damaged power line." },
       { id: "manholes", label: "Open or damaged manholes", icon: "CircleDot", description: "Report an open or damaged manhole." },
+    ],
+  },
+  {
+    id: "weather-environment",
+    title: "Weather & Environment",
+    description: "Weather-related incidents and concerns affecting the local environment.",
+    items: [
       { id: "flooding", label: "Flooding", icon: "Waves", description: "Report flooding in your area." },
       { id: "typhoon", label: "Typhoon-related incidents", icon: "CloudRain", description: "Report an incident related to typhoon conditions." },
       { id: "waste-sanitation", label: "Waste and sanitation issues", icon: "Trash2", description: "Report a waste or sanitation issue." },

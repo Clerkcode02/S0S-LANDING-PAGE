@@ -9,8 +9,8 @@ section and what is still draft. Full accuracy rules: that skill — not duplica
 | Nav | `src/content/site.ts` | Product name, nav anchors | Informational CTA (`exploreCta`, no download/install destination — see CLAUDE.md "Scope") |
 | Hero | `src/content/sections.ts` | Verbatim brief copy (eyebrow, H1, sub, description, CTAs), emergency disclaimer (short) | — (copy is fixed per brief, not drafted) |
 | About | `src/content/sections.ts` | Citizen → operations center → responder workflow, brand statement | — |
-| How It Works | `src/content/sections.ts` | 5-stage workflow: Report → Review → Assign → Respond → Resolve, verified per-stage descriptions | — |
-| Reporting Categories | `src/content/categories.ts` | Exact category list + 5 approved groups from the skill | Descriptions are generic by design; none promise response time |
+| How It Works | `src/content/sections.ts` | App-only workflow: Open the App → Capture & Report → Get Confirmation → Track Resolution | — |
+| Reporting Categories | `src/content/categories.ts` | Exact category list + 6 approved groups from the skill | Descriptions are generic by design; none promise response time |
 | App Showcase | `src/config/screenshots.ts` | N/A (visual only) | All slots `src: null` until screenshots arrive |
 | How to Register | `src/content/registration.ts` | Steps 1–4 confirmed from real app screenshots: sign-in/create account → accept Terms & Conditions → pre-registration name fields → verification levels (Basic/Registered/Fully Verified) | Still `status: "draft"` — the rest of the multi-step pre-registration form and the exact verification mechanism aren't confirmed yet |
 | Incident Tracking | `src/content/sections.ts` | Status vocabulary: Pending, Ongoing, Cleared (confirmed from app UI) | Labeled "Illustration" — not live data |

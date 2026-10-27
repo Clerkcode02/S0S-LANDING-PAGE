@@ -7,7 +7,7 @@ import { DeviceFrame } from "@/components/device/DeviceFrame";
 import { HowItWorksDesktop } from "./HowItWorksDesktop";
 
 /**
- * How It Works — dark. 5-stage storytelling. Mobile/tablet: stacked steps, each with
+ * How It Works — dark. App-only storytelling. Mobile/tablet: stacked steps, each with
  * its own phone, fully readable top-to-bottom with no JS. Desktop: sticky phone that
  * swaps per stage (see HowItWorksDesktop) — no scroll-jacking, no pin.
  */
@@ -39,7 +39,11 @@ export function HowItWorks() {
                     {stage.description}
                   </p>
                   <div className={screenshot.device === "web" ? "mt-6 max-w-[340px]" : "mt-6 max-w-[220px]"}>
-                    <DeviceFrame screenshot={screenshot} slot={stage.slot} />
+                    <DeviceFrame
+                      screenshot={screenshot}
+                      slot={stage.slot}
+                      sizes={screenshot.device === "web" ? "320px" : "200px"}
+                    />
                     {screenshot.device === "web" && (
                       <p className="mt-2 text-xs text-muted-dark">Operations center web view</p>
                     )}
@@ -50,11 +54,12 @@ export function HowItWorks() {
           })}
         </ol>
 
-        {/* Desktop: sticky phone + active-step highlight */}
-        <div className="mt-16 hidden lg:block">
-          <HowItWorksDesktop stages={howItWorks.stages} />
-        </div>
       </Container>
+
+      {/* Desktop: full-bleed scroll-driven perspective gallery */}
+      <div className="mt-8 hidden lg:block">
+        <HowItWorksDesktop stages={howItWorks.stages} />
+      </div>
     </section>
   );
 }

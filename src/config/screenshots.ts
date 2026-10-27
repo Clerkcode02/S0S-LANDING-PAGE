@@ -96,12 +96,10 @@ export const screenshots: Screenshot[] = [
   mobilePlaceholder("hero-secondary", "category", ["hero-secondary"], "Category selection screen for submitting a report."),
   {
     id: "how-report",
-    src: "/screenshots/how-report.webp",
+    src: "/screenshots/how-report-clear.webp",
     width: 828,
     height: 1792,
-    // Original had a visible face and a precise street address/GPS/timestamp overlay —
-    // blurred at the user's explicit request (2026-10-26). See docs/assets-guide.md.
-    alt: "Report capture screen with a camera viewfinder; the photographed subject and the location/timestamp overlay are blurred for privacy.",
+    alt: "Report capture screen with a camera viewfinder showing a photographed emergency and its location details.",
     purpose: "capture",
     slots: ["how-report", "showcase"],
     device: "mobile",
@@ -147,9 +145,7 @@ export const screenshots: Screenshot[] = [
     src: "/screenshots/how-resolve.webp",
     width: 828,
     height: 1792,
-    // Original showed a specific street address — blurred at the user's explicit
-    // request (2026-10-26). See docs/assets-guide.md.
-    alt: "Status screen showing a report's timeline from Pending to Cleared, with the location detail blurred for privacy.",
+    alt: "Status screen showing a medical emergency report's location and timeline from Pending to Cleared.",
     purpose: "status",
     slots: ["how-resolve", "tracking", "showcase"],
     device: "mobile",

@@ -29,7 +29,7 @@ export function About() {
             return (
               <div key={node.id} className="flex flex-1 items-center gap-4 lg:gap-6">
                 <Reveal delayMs={i * 80} className="flex-1">
-                  <div className="h-full rounded-[var(--radius-card)] border border-paper-line p-6">
+                  <div className="hover-lift h-full rounded-[var(--radius-card)] border border-paper-line p-6 hover:border-accent/40">
                     <Icon aria-hidden="true" size={28} strokeWidth={1.5} className="text-accent-strong" />
                     <h3 className="mt-4 text-[length:var(--text-h3)] text-text-dark">{node.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted-light">{node.description}</p>

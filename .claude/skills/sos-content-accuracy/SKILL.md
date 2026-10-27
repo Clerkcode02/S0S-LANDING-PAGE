@@ -23,7 +23,8 @@ This page introduces and showcases the app — it is not an install funnel. No "
 - **Emergency Response:** Rescue, Police, Fire, Other emergency reports
 - **Public Safety:** Public disturbances, Public intoxication, Video complaints
 - **Vulnerable Community Support:** Violence and vulnerable-sector concerns, Incidents involving persons with disabilities and senior citizens, Bullying
-- **Infrastructure & Environment:** Fallen or damaged power lines, Open or damaged manholes, Flooding, Typhoon-related incidents, Waste and sanitation issues
+- **Infrastructure Hazards:** Fallen or damaged power lines, Open or damaged manholes
+- **Weather & Environment:** Flooding, Typhoon-related incidents, Waste and sanitation issues
 - **Traffic & Community Concerns:** Traffic incidents, Road obstructions, Animal concerns
 
 Category descriptions must be generic ("Report situations where someone may need rescue assistance") — never promise who responds or how fast.

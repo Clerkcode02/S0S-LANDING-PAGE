@@ -52,10 +52,12 @@ export function Coordination() {
             />
           </svg>
           <div className="relative grid grid-cols-4 gap-6">
-            {coordination.nodes.map((node) => {
+            {coordination.nodes.map((node, i) => {
               const Icon = ICONS[node.id as keyof typeof ICONS];
               return (
-                <div key={node.id} className="flex flex-col items-start">
+                // Staggered behind the connector draw-in, so the line appears to
+                // deliver each node in turn rather than all four landing at once.
+                <Reveal key={node.id} delayMs={260 + i * 90} className="flex flex-col items-start">
                   <span className="flex size-16 items-center justify-center rounded-full border border-paper-line bg-paper">
                     <Icon aria-hidden="true" size={28} strokeWidth={1.5} className="text-accent-strong" />
                   </span>
@@ -63,7 +65,7 @@ export function Coordination() {
                   <p className="mt-2 max-w-[220px] text-sm leading-relaxed text-muted-light">
                     {node.description}
                   </p>
-                </div>
+                </Reveal>
               );
             })}
           </div>

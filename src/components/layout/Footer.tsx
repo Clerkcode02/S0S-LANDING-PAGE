@@ -1,14 +1,16 @@
 import { site } from "@/content/site";
+import Link from "next/link";
 
 // Static build-time value — avoids pulling the footer into dynamic rendering just for
 // a copyright year. Bump manually (or wire up a build step) when it's worth the cost.
 const COPYRIGHT_YEAR = 2026;
 
 const footerNav = [
-  { label: "About", href: "#about" },
-  { label: "Features", href: "#features" },
-  { label: "How to Register", href: "#register" },
-  { label: "FAQs", href: "#faq" },
+  { label: "About", href: "/#about" },
+  { label: "Features", href: "/#features" },
+  { label: "How to Register", href: "/#register" },
+  { label: "FAQs", href: "/#faq" },
+  { label: "Book Demo", href: "/book-demo" },
 ];
 
 /**
@@ -34,9 +36,9 @@ export function Footer() {
             <ul className="mt-4 space-y-3">
               {footerNav.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className="text-sm text-text-light/90 hover:text-text-light">
+                  <Link href={item.href} className="text-sm text-text-light/90 hover:text-text-light">
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

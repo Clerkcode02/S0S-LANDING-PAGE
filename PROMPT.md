@@ -62,7 +62,7 @@ Design tokens + fluid type scale in `globals.css`; fonts via `next/font`. Build 
 2. **Hero** (dark, cinematic) — headline dominant; dominant phone + supporting phone in 2.5D perspective; short disclaimer under CTAs.
 3. **About** (light) — citizen → operations center → responder flow as a clean 3-node visual.
 4. **How It Works** (dark) — 5-stage storytelling; desktop: sticky phone that swaps screenshot per stage (no scroll-jacking); mobile: stacked steps each with its own phone. Fully readable without JS.
-5. **Reporting Categories** (light) — 5 groups, elegant responsive grid, lucide icons.
+5. **Reporting Categories** (light) — 6 groups, elegant responsive grid, lucide icons.
 6. **App Showcase** (dark, full-bleed) — "See SOS in Action": 3D floating phones on desktop, native scroll-snap gallery on mobile; labeled placeholders until screenshots arrive.
 7. **How to Register** (light) — draft-marked step guide with screenshot slots (welcome, register, verify if enabled, login/home) + config-driven store buttons ("Coming soon" while null).
 8. **Incident Tracking** (dark) — labeled "Illustration" status component Pending → Ongoing → Resolved with timestamp explanation; not presented as live.

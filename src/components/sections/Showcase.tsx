@@ -50,7 +50,7 @@ export function Showcase() {
               className={DESKTOP_OFFSETS[i % DESKTOP_OFFSETS.length]}
             >
               <div data-showcase-phone>
-                <PhoneFrame screenshot={shot} slot={shot.slots[0]} className="w-[220px]" />
+                <PhoneFrame screenshot={shot} slot={shot.slots[0]} sizes="200px" className="w-[220px]" />
               </div>
             </Reveal>
           ))}
@@ -61,11 +61,11 @@ export function Showcase() {
           role="region"
           aria-label="SOS: COMMUNITY APP screenshot gallery"
           tabIndex={0}
-          className="snap-gallery mt-16 gap-5 px-1 lg:hidden"
+          className="snap-gallery mt-16 flex gap-5 px-1 lg:hidden"
         >
           {items.map((shot) => (
             <div key={shot.id} className="w-[220px] shrink-0 first:ml-4 last:mr-4">
-              <PhoneFrame screenshot={shot} slot={shot.slots[0]} />
+              <PhoneFrame screenshot={shot} slot={shot.slots[0]} sizes="200px" />
             </div>
           ))}
         </div>

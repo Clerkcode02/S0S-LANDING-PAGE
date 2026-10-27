@@ -43,19 +43,46 @@ export const about = {
   ],
 };
 
+export const responseSystem = {
+  eyebrow: "RESPONSE SYSTEM",
+  headline: "How Our Response System Works",
+  intro: "Two connected steps turn an incoming SOS report into a coordinated response.",
+  steps: [
+    {
+      id: "assign",
+      step: 1,
+      label: "ASSIGN",
+      title: "Match the report with the right responder.",
+      description:
+        "The operations center reviews the incident alongside available units on the map, then assigns an appropriate responder to the report.",
+      highlights: ["Review the report", "See available units", "Assign a responder"],
+      slot: "how-assign",
+    },
+    {
+      id: "respond",
+      step: 2,
+      label: "RESPOND",
+      title: "Keep the response moving and visible.",
+      description:
+        "The assigned responder receives the incident location and proceeds to it, while the operations center follows the response on the shared map.",
+      highlights: ["Share the location", "Track the response", "Follow progress"],
+      slot: "how-respond",
+    },
+  ],
+} as const;
+
 export type HowItWorksStageId =
+  | "open"
   | "report"
-  | "review"
-  | "assign"
-  | "respond"
-  | "resolve";
+  | "confirmation"
+  | "track";
 
 export interface HowItWorksStage {
   id: HowItWorksStageId;
   step: number;
   title: string;
   description: string;
-  slot: "how-report" | "how-review" | "how-assign" | "how-respond" | "how-resolve";
+  slot: "hero-primary" | "how-report" | "how-review" | "how-resolve";
 }
 
 export const howItWorks = {
@@ -63,43 +90,35 @@ export const howItWorks = {
   headline: "From Report to Resolution.",
   stages: [
     {
-      id: "report",
+      id: "open",
       step: 1,
-      title: "Report",
+      title: "Open the App",
       description:
-        "A citizen opens the app, selects the relevant category, and captures and submits the incident details.",
+        "Open the SOS: COMMUNITY APP main screen and choose the report category that best matches the situation.",
+      slot: "hero-primary",
+    },
+    {
+      id: "report",
+      step: 2,
+      title: "Capture & Report",
+      description:
+        "Capture the incident and submit the available details through the app.",
       slot: "how-report",
     },
     {
-      id: "review",
-      step: 2,
-      title: "Review",
+      id: "confirmation",
+      step: 3,
+      title: "Get Confirmation",
       description:
-        "The designated operations center receives the report, and authorized personnel review and assess it.",
+        "After submission, the app confirms that the emergency report was sent and provides access to the user's emergencies.",
       slot: "how-review",
     },
     {
-      id: "assign",
-      step: 3,
-      title: "Assign",
-      description:
-        "Through the operations center's web view, the report is assigned to the appropriate responders based on personnel's assessment.",
-      slot: "how-assign",
-    },
-    {
-      id: "respond",
+      id: "track",
       step: 4,
-      title: "Respond",
+      title: "Track Resolution",
       description:
-        "The operations center's web view provides responders with incident details, location information, and route guidance to proceed.",
-      slot: "how-respond",
-    },
-    {
-      id: "resolve",
-      step: 5,
-      title: "Resolve",
-      description:
-        "Status updates and timestamps are recorded as the incident moves toward resolution, supporting transparency and accountability.",
+        "Follow recorded status updates and timestamps as the report moves from Pending toward Cleared.",
       slot: "how-resolve",
     },
   ] satisfies HowItWorksStage[],

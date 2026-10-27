@@ -35,6 +35,7 @@
 
   /* Fluid type scale */
   --text-display: clamp(3rem, 1.2rem + 7.5vw, 9rem);
+  --text-hero: clamp(3.25rem, 2.2rem + 4.2vw, 6.25rem);
   --text-h2: clamp(2.25rem, 1.2rem + 4.2vw, 5.5rem);
   --text-h3: clamp(1.375rem, 1rem + 1.4vw, 2.25rem);
   --text-lead: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
@@ -49,6 +50,16 @@
 
   /* Layout */
   --breakpoint-3xl: 1920px;
+
+  /* Motion — one easing family, one duration family, used by every animation
+   * on the page (CSS and GSAP alike). GSAP's "power3.out" is the runtime
+   * equivalent of --ease-soft. See .claude/skills/lightweight-motion
+   * ("Easing & timing"). */
+  --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-hover: 200ms;
+  --dur-base: 400ms;
+  --dur-reveal: 700ms;
 }
 
 :root {
@@ -90,6 +101,14 @@ h3 {
 
 section[id] {
   scroll-margin-top: var(--nav-h);
+}
+
+.hero-gradient-text {
+  width: fit-content;
+  color: transparent;
+  background: linear-gradient(96deg, var(--color-accent) 0%, #ef5964 48%, var(--color-accent-strong) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
 }
 
 /* ---------------------------------------------------------------------------
@@ -136,8 +155,8 @@ section[id] {
   opacity: 0;
   transform: translate3d(0, 24px, 0);
   transition:
-    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    opacity var(--dur-reveal) var(--ease-soft),
+    transform var(--dur-reveal) var(--ease-soft);
 }
 
 [data-reveal].is-visible {
@@ -163,13 +182,195 @@ section[id] {
   }
 }
 
+@keyframes demo-success-pop {
+  0% { opacity: 0; transform: scale(0.65); }
+  70% { transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.demo-success-check {
+  animation: demo-success-pop 520ms var(--ease-settle) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-success-check { animation: none; }
+}
+
+/* Response system — an alternating two-step handoff joined by a line that draws
+ * as the flow enters the viewport. Motion stays on transform and opacity only. */
+.response-system-section {
+  background:
+    radial-gradient(circle at 8% 20%, rgba(217, 54, 66, 0.13), transparent 30rem),
+    radial-gradient(circle at 92% 78%, rgba(217, 54, 66, 0.08), transparent 28rem),
+    var(--color-ink);
+}
+
+.response-system-connector {
+  position: absolute;
+  inset-block: 1.75rem;
+  left: 50%;
+  display: none;
+  width: 1px;
+}
+
+.response-system-connector > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, var(--color-accent) 12%, var(--color-accent) 88%, transparent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1.05s var(--ease-soft) 180ms;
+}
+
+.response-system-connector.is-visible > span,
+.no-js .response-system-connector > span {
+  transform: scaleY(1);
+}
+
+.response-system-node {
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  display: grid;
+  width: 3.25rem;
+  height: 3.25rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 32%, transparent);
+  border-radius: 999px;
+  background: var(--color-ink-raised);
+  color: var(--color-accent);
+  box-shadow: 0 0 0 8px var(--color-ink), 0 12px 30px -18px rgba(0, 0, 0, 0.8);
+  font-family: var(--font-display);
+  font-weight: 700;
+  transform: scale(0.82);
+  transition: transform var(--dur-reveal) var(--ease-settle) 120ms;
+}
+
+.response-system-step[data-reveal] {
+  position: relative;
+  transform: translate3d(0, 28px, 0);
+}
+
+.response-system-step::before {
+  content: attr(data-label);
+  position: absolute;
+  top: -2.5rem;
+  right: -0.25rem;
+  z-index: -1;
+  color: rgba(255, 255, 255, 0.035);
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 14vw, 11rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.8;
+  pointer-events: none;
+}
+
+.response-system-step[data-reveal].is-visible,
+.no-js .response-system-step[data-reveal] {
+  transform: none;
+}
+
+.response-system-step.is-visible .response-system-node,
+.no-js .response-system-node {
+  transform: scale(1);
+}
+
+.response-system-browser {
+  transition: transform var(--dur-base) var(--ease-soft);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .response-system-visual:hover .response-system-browser {
+    transform: translate3d(0, -8px, 0) scale(1.012);
+  }
+}
+
+@media (min-width: 1024px) {
+  .response-system-connector {
+    display: block;
+  }
+
+  .response-system-node {
+    position: relative;
+    top: auto;
+    left: auto;
+    z-index: 2;
+    justify-self: center;
+  }
+
+  .response-system-step[data-reveal] {
+    transform: translate3d(-32px, 0, 0);
+  }
+
+  .response-system-step-reverse[data-reveal] {
+    transform: translate3d(32px, 0, 0);
+  }
+
+  .response-system-step[data-reveal].is-visible,
+  .no-js .response-system-step[data-reveal] {
+    transform: none;
+  }
+
+  .response-system-step-reverse .response-system-visual {
+    grid-column: 3;
+  }
+
+  .response-system-step-reverse .response-system-node {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .response-system-step-reverse .response-system-copy {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: end;
+    text-align: right;
+  }
+
+  .response-system-step-reverse .response-system-copy ul {
+    justify-content: flex-end;
+  }
+
+  .response-system-step-reverse::before {
+    right: auto;
+    left: -0.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .response-system-connector > span,
+  .response-system-node,
+  .response-system-browser {
+    transition: none;
+    transform: none;
+  }
+
+  .response-system-step[data-reveal],
+  .response-system-step-reverse[data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The desktop mobile-first list is hidden at this breakpoint, so keep every stage
+ * reachable when scripting is unavailable. */
+.no-js .how-works-scene { height: auto; padding: 4rem 1.25rem; }
+.no-js .how-works-sticky { position: relative; height: auto; min-height: 0; overflow-x: auto; }
+.no-js .how-works-rail { position: relative; display: flex; gap: 1rem; padding: 13rem 0 6rem; }
+.no-js .how-works-card {
+  position: relative; left: auto; top: auto; flex: 0 0 19rem;
+  transform: none !important; opacity: 1 !important;
+}
+
 /* Responder Coordination connector — draws in once via the same [data-reveal]
  * mechanism as everything else (shared IntersectionObserver), no extra JS. Small SVG
  * only. See .claude/skills/lightweight-motion/SKILL.md ("Coordination"). */
 .connector-path {
   stroke-dasharray: 600;
   stroke-dashoffset: 600;
-  transition: stroke-dashoffset 1.1s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: stroke-dashoffset 1.1s var(--ease-soft);
 }
 
 [data-reveal].is-visible .connector-path,
@@ -219,9 +420,56 @@ section[id] {
   transform-style: preserve-3d;
 }
 
+/* Scroll-driven How It Works perspective gallery. The tall scene provides ordinary
+ * document scroll; the viewport stays sticky while progress maps to depth. */
+.how-works-scene { position: relative; height: 390vh; }
+.how-works-sticky {
+  position: sticky; top: 0; height: 100vh; min-height: 46rem; overflow: hidden;
+  perspective: 1500px;
+  background: radial-gradient(ellipse at center, rgba(217, 54, 66, 0.09), transparent 42%), var(--color-ink);
+}
+.how-works-copy {
+  position: absolute;
+  /* Leave enough room for the full desktop header, including browser zoom and
+   * larger user font settings. The previous offset only cleared its nominal
+   * token height, allowing the step number and title to sit underneath it. */
+  top: max(calc(var(--nav-h) + 4rem), 16vh);
+  left: 50%;
+  z-index: 30;
+  width: 100%;
+  transform: translateX(-50%);
+  padding-inline: 1.5rem;
+  text-align: center;
+}
+.how-works-rail { position: absolute; inset: 0; transform-style: preserve-3d; }
+.how-works-card {
+  position: absolute; left: 50%; top: clamp(18rem, 36vh, 24rem); display: flex; width: min(30vw, 28rem);
+  aspect-ratio: 0.72; align-items: center; justify-content: center; overflow: visible;
+  border: 0 !important; background: transparent !important; box-shadow: none !important;
+  backdrop-filter: none !important;
+  transform: translateX(-50%); transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+.how-works-card-label {
+  position: absolute; top: -1.35rem; left: 50%; z-index: 2; display: flex;
+  width: 48%; transform: translateX(-50%); justify-content: space-between;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+}
+.how-works-card.is-active .how-works-card-label { color: var(--color-accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .how-works-scene { height: auto; padding: 4rem 1.25rem; }
+  .how-works-sticky { position: relative; height: auto; min-height: 0; overflow-x: auto; }
+  .how-works-rail { position: relative; display: flex; gap: 1rem; padding: 13rem 0 6rem; }
+  .how-works-card {
+    position: relative; left: auto; top: auto; flex: 0 0 19rem;
+    transform: none !important; opacity: 1 !important;
+  }
+}
+
 /* Horizontal scroll-snap gallery (mobile showcase, < 1024px). */
 .snap-gallery {
-  display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-padding-left: 1.25rem;
@@ -232,8 +480,460 @@ section[id] {
   scroll-snap-align: start;
 }
 
+@media (min-width: 1024px) {
+  .snap-gallery {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .snap-gallery {
     scroll-behavior: auto;
+  }
+}
+
+/* ===========================================================================
+ * PREMIUM MOTION LAYER
+ * One easing family, one duration family — see docs/animation-spec.md.
+ * Everything below animates transform/opacity only, is gated on
+ * prefers-reduced-motion, and degrades to a complete static page without JS.
+ * ========================================================================= */
+
+/* ---- Hero ambient accents -------------------------------------------------
+ * Two very large, very low-opacity radial fields drifting behind the hero.
+ * Pure CSS (no JS, no rAF), transform-only, and kept off the GSAP-driven
+ * [data-hero-glow] element so the scrub tween and these never fight over the
+ * same transform. */
+.hero-blob {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(60px); /* set once, never animated */
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-blob {
+    animation: hero-blob-drift var(--blob-dur, 18s) ease-in-out infinite;
+    animation-delay: var(--blob-delay, 0s);
+  }
+}
+
+@keyframes hero-blob-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(var(--blob-x, 4%), var(--blob-y, -5%), 0) scale(1.12);
+  }
+}
+
+/* ---- Hero phone idle float ------------------------------------------------
+ * On its own wrapper element so it composes with the 2.5D rotation on the
+ * ancestor and the GSAP entrance on the descendant — three separate elements,
+ * three separate transforms, no conflicts. */
+@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+  .phone-float {
+    animation: phone-float 7.5s ease-in-out infinite;
+  }
+}
+
+@keyframes phone-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -11px, 0);
+  }
+}
+
+/* ---- Auto-cycling screen stack (hero phone) -------------------------------
+ * Without JS, or with reduced motion, [data-cycling] is never set and only the
+ * first screen is visible — the hero still shows a real app screenshot.
+ *
+ * Every scale below is <= 1, on purpose. These screens hold the hero's priority
+ * screenshot, and LCP records a new candidate whenever an element paints at a
+ * LARGER visible size than the current largest. An incoming screen easing in from
+ * scale(1.03) is briefly bigger than the first screen, which hands LCP to whatever
+ * screen the cycle happens to be on — measured at ~4s before this was capped. */
+/* EVERY screen is absolute and inset-0, including the first, and the stack carries
+ * an explicit aspect-ratio instead. Letting the first screen sit in normal flow with
+ * auto height made its box ~1.4% smaller than the stretched ones, which was enough
+ * for a later screen to be recorded as a new LCP candidate (measured: 195,015px^2 at
+ * 224ms, then 197,842px^2 at 5,228ms). Identical boxes tie, and LCP only replaces on
+ * a strictly larger paint. */
+.screen-stack > [data-screen] {
+  position: absolute;
+  inset: 0;
+}
+
+.screen-stack > [data-screen] > img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.screen-stack > [data-screen]:not(:first-child) {
+  opacity: 0;
+}
+
+.screen-stack[data-cycling] > [data-screen] {
+  opacity: 0;
+  transform: translate3d(7%, 0, 0) scale(0.98);
+  transition:
+    opacity 560ms var(--ease-soft),
+    transform 820ms var(--ease-settle);
+}
+
+.screen-stack[data-cycling] > [data-screen][data-active] {
+  z-index: 2;
+  opacity: 1;
+  transform: none;
+}
+
+.screen-stack[data-cycling] > [data-screen][data-leaving] {
+  z-index: 1;
+  opacity: 0;
+  transform: translate3d(-5%, 0, 0) scale(0.97);
+}
+
+/* ---- Device glass + chrome ------------------------------------------------ */
+.phone-bezel-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(255, 255, 255, 0.02) 26%,
+    transparent 48%,
+    rgba(255, 255, 255, 0.04) 86%
+  );
+}
+
+/* Specular sweep — translated across the glass by GSAP on each screen change.
+ * Oversized and rotated so the band clears the frame diagonally. */
+.phone-glass-sweep {
+  position: absolute;
+  inset: -40% -60%;
+  z-index: 4;
+  pointer-events: none;
+  transform: translate3d(-130%, 0, 0);
+  background: linear-gradient(
+    100deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.13) 48%,
+    rgba(255, 255, 255, 0.04) 55%,
+    transparent 62%
+  );
+}
+
+.phone-side-button {
+  position: absolute;
+  z-index: 1;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.14),
+    rgba(255, 255, 255, 0.04)
+  );
+}
+
+/* ---- Simulated tap: cursor dot + ripple -----------------------------------
+ * A neutral pointer affordance drawn OVER the screenshot. It is presentation
+ * chrome, not app UI — nothing here imitates a control inside the real app.
+ * See .claude/skills/sos-content-accuracy ("Never fabricate app UI"). */
+.tap-cursor,
+.tap-ripple {
+  position: absolute;
+  z-index: 6;
+  pointer-events: none;
+  border-radius: 9999px;
+  opacity: 0;
+  margin-left: -7px;
+  margin-top: -7px;
+}
+
+.tap-cursor {
+  width: 14px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3), 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.tap-ripple {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+}
+
+/* ---- Floating badges around the hero phone -------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .orbit-drift {
+    animation: orbit-drift var(--orbit-dur, 9s) ease-in-out infinite;
+    animation-delay: var(--orbit-delay, 0s);
+  }
+}
+
+@keyframes orbit-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(var(--orbit-x, 0), var(--orbit-y, -8px), 0);
+  }
+}
+
+/* ---- Reveal stagger ------------------------------------------------------
+ * CSS-only sibling stagger so a section can stagger its children without one
+ * <Reveal> wrapper (and one transitionDelay write) per child. Capped at 5
+ * steps x 70ms per .claude/skills/lightweight-motion ("Reveal pattern"). */
+[data-reveal-stagger] > *[data-reveal]:nth-child(1) { transition-delay: 0ms; }
+[data-reveal-stagger] > *[data-reveal]:nth-child(2) { transition-delay: 70ms; }
+[data-reveal-stagger] > *[data-reveal]:nth-child(3) { transition-delay: 140ms; }
+[data-reveal-stagger] > *[data-reveal]:nth-child(4) { transition-delay: 210ms; }
+[data-reveal-stagger] > *[data-reveal]:nth-child(n + 5) { transition-delay: 280ms; }
+
+/* ---- Shared hover treatments --------------------------------------------- */
+.hover-lift {
+  transition:
+    transform var(--dur-hover) var(--ease-soft),
+    border-color var(--dur-hover) var(--ease-soft),
+    opacity var(--dur-hover) var(--ease-soft);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-lift:hover {
+    transform: translate3d(0, -3px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-lift,
+  .hover-lift:hover {
+    transform: none;
+  }
+
+  .screen-stack[data-cycling] > [data-screen] {
+    transition: none;
+  }
+}
+
+/* Hero primary phone tilt. Applied via a class on a single element rather than by
+ * duplicating the phone for mobile and desktop — PhoneShowcase is stateful and must
+ * only ever be mounted once. --rx/--ry are written by TiltOnHover. */
+@media (min-width: 1024px) {
+  .hero-phone-tilt {
+    transform: rotateY(var(--ry, -8deg)) rotateX(var(--rx, 6deg)) translate3d(0, 0, 0);
+  }
+}
+
+/* ===========================================================================
+ * INTRO SPLASH
+ * Visibility is owned by html[data-intro], stamped pre-paint by the inline script
+ * in src/app/layout.tsx. Default is hidden, which is what keeps no-JS visitors and
+ * returning visitors from ever seeing this overlay.
+ * ========================================================================= */
+/* Normal-flow column rather than a centred grid: the device below the wordmark is
+ * taller than a short viewport can hold, and letting it overflow a clipped column is
+ * far more predictable across heights than centring and hoping. */
+.intro-root {
+  display: none;
+}
+
+html[data-intro] .intro-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  padding-top: clamp(2.5rem, 11vh, 8rem);
+}
+
+/* Scroll is locked for the duration. scrollbar-gutter keeps the gutter reserved so
+ * removing the scrollbar doesn't reflow the page into a CLS hit. */
+html.intro-lock {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+.intro-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: min(60rem, 90vw);
+  width: min(60rem, 90vw);
+  margin-left: calc(min(60rem, 90vw) / -2);
+  margin-top: calc(min(60rem, 90vw) / -2);
+  pointer-events: none;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-accent) 26%, transparent) 0%,
+    transparent 62%
+  );
+}
+
+/* Radar rings, centered on the mark. Sized in em of the mark so they track it. */
+.intro-rings {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: var(--intro-mark-size);
+  width: var(--intro-mark-size);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.intro-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1.5px solid color-mix(in srgb, var(--color-accent) 70%, transparent);
+  opacity: 0;
+}
+
+:root {
+  --intro-mark-size: clamp(3rem, 10vw, 4.5rem);
+}
+
+.intro-mark {
+  height: var(--intro-mark-size);
+  width: var(--intro-mark-size);
+  color: var(--color-accent);
+  opacity: 0;
+}
+
+.intro-word-row {
+  margin-top: clamp(1rem, 3vw, 1.75rem);
+}
+
+/* The wordmark. Same family/weight as the nav mark so the closing FLIP lands on it
+ * cleanly — see IntroSplash ("FLIP the wordmark into the nav"). */
+.intro-word {
+  display: flex;
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 13vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--color-text-light);
+}
+
+/* One mask per letter — the letter slides up from behind it. Transform only; no
+ * clip-path animation. */
+.intro-letter-mask {
+  display: block;
+  overflow: hidden;
+}
+
+.intro-letter {
+  display: block;
+  transform: translate3d(0, 115%, 0);
+}
+
+.intro-sub {
+  margin-top: clamp(0.5rem, 2vw, 0.9rem);
+  font-size: clamp(0.75rem, 2.6vw, 0.95rem);
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-muted-dark);
+  opacity: 0;
+}
+
+.intro-skip {
+  position: absolute;
+  right: clamp(1rem, 4vw, 2.5rem);
+  bottom: clamp(1rem, 4vw, 2.5rem);
+  display: grid;
+  min-height: 44px;
+  min-width: 44px;
+  place-items: center;
+  padding-inline: 0.75rem;
+  border-radius: var(--radius-control);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted-dark);
+  transition: color var(--dur-hover) var(--ease-soft);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .intro-skip:hover {
+    color: var(--color-text-light);
+  }
+}
+
+/* ---- The app itself ------------------------------------------------------
+ * A real registered screenshot in the same PhoneFrame the rest of the page uses —
+ * never a mock-up, per .claude/skills/sos-content-accuracy ("Never fabricate app
+ * UI"). Deliberately sized to the SAME width as the hero phone so both declare the
+ * same `sizes` and share one optimized image request instead of pulling a second
+ * variant of the same file (the duplicate-variant trap documented in
+ * docs/performance-checklist.md).
+ *
+ * It is expected to overflow the bottom of a short viewport; .intro-root clips it.
+ * That reads as intentional — the device rising into frame — and removes any need to
+ * shrink it to fit the shortest phone. */
+.intro-device {
+  flex: none;
+  margin-top: clamp(1.25rem, 4vh, 2.75rem);
+  width: min(17rem, 62vw);
+  /* Starts DIM but fully painted, and 12px HIGH rather than low. Both are LCP
+   * requirements, measured:
+   *
+   * On mobile the hero phone sits below the fold, so this device is the largest
+   * in-viewport content and therefore the LCP element. Fading it up from opacity 0
+   * and rising it into frame meant its painted area grew late, and LCP moved from
+   * 160ms to 1.65s. LCP ignores only *fully* transparent elements, so starting at
+   * 0.22 keeps it a candidate from the very first paint; and starting ABOVE its
+   * resting position means the stage clips less of it at first, so every later
+   * frame is smaller and can never re-nominate.
+   *
+   * Net effect: the device still materialises and settles, but its largest paint is
+   * its first one. See docs/performance-checklist.md and docs/animation-spec.md. */
+  opacity: 0.22;
+  transform: translate3d(0, -12px, 0);
+}
+
+html[data-intro="quick"] .intro-device {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Reduced motion: one quick fade, no sequence -------------------------
+ * The brand is painted in its final state immediately (no transforms to resolve),
+ * held briefly, then faded out. No GSAP is requested on this path at all. */
+html[data-intro="quick"] .intro-mark,
+html[data-intro="quick"] .intro-sub,
+html[data-intro="quick"] .intro-glow {
+  opacity: 1;
+}
+
+html[data-intro="quick"] .intro-letter {
+  transform: none;
+}
+
+html[data-intro="quick"] .intro-ring {
+  opacity: 0.2;
+}
+
+html[data-intro="quick"] .intro-root[data-state="quick-out"] {
+  animation: intro-quick-out var(--intro-quick-dur, 0.35s) var(--ease-soft)
+    var(--intro-quick-delay, 0.35s) both;
+}
+
+@keyframes intro-quick-out {
+  to {
+    opacity: 0;
   }
 }

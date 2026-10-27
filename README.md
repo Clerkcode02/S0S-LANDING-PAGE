@@ -98,3 +98,4 @@ Contact email, privacy/terms URLs, availability/coverage, and exact registration
 are unconfirmed and render as drafts or honest "unavailable" states. See
 `docs/content-map.md` for the full list and `src/content/site.ts` /
 `src/content/registration.ts` to fill them in once known.
+# S0S-LANDING-PAGE

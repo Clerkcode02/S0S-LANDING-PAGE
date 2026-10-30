@@ -9,12 +9,14 @@ section and what is still draft. Full accuracy rules: that skill — not duplica
 | Nav | `src/content/site.ts` | Product name, nav anchors | Informational CTA (`exploreCta`, no download/install destination — see CLAUDE.md "Scope") |
 | Hero | `src/content/sections.ts` | Verbatim brief copy (eyebrow, H1, sub, description, CTAs), emergency disclaimer (short) | — (copy is fixed per brief, not drafted) |
 | About | `src/content/sections.ts` | Citizen → operations center → responder workflow, brand statement | — |
+| Response System | `src/content/sections.ts` | Eight-stage product-owner-supplied workflow: report → operator alert → verification → assignment → navigation → monitoring → status updates → records | Process imagery remains clearly labeled placeholder content until approved assets are supplied |
 | How It Works | `src/content/sections.ts` | App-only workflow: Open the App → Capture & Report → Get Confirmation → Track Resolution | — |
 | Reporting Categories | `src/content/categories.ts` | Exact category list + 6 approved groups from the skill | Descriptions are generic by design; none promise response time |
 | App Showcase | `src/config/screenshots.ts` | N/A (visual only) | All slots `src: null` until screenshots arrive |
 | How to Register | `src/content/registration.ts` | Steps 1–4 confirmed from real app screenshots: sign-in/create account → accept Terms & Conditions → pre-registration name fields → verification levels (Basic/Registered/Fully Verified) | Still `status: "draft"` — the rest of the multi-step pre-registration form and the exact verification mechanism aren't confirmed yet |
 | Incident Tracking | `src/content/sections.ts` | Status vocabulary: Pending, Ongoing, Cleared (confirmed from app UI) | Labeled "Illustration" — not live data |
 | Responder Coordination | `src/content/sections.ts` | Operations center → review → assignment → on-site flow | — |
+| Sustainable Development Goals | `src/content/sdgs.ts` | Product-owner-supplied alignment with SDGs 3, 5, 9, 10, 11, 13, 16, and 17; descriptions use only verified reporting, review, coordination, vulnerable-sector, weather, status, and record-keeping capabilities | — |
 | FAQ | `src/content/faq.ts` | 5 of 7 answers from verified facts + disclaimer | "Where is the app available?" renders `site.availability` draft text; "Do I need an account?" points to the draft register guide |
 | Final CTA | `src/content/sections.ts` | Verbatim headline/support copy, disclaimer (short) | CTA is informational ("Discover SOS" → `#features`), not a download action |
 | Footer | `src/content/site.ts` | Nav links, full disclaimer | Contact / Privacy / Terms render as "Unavailable" until `site.contact` / `site.legal` are filled in |
